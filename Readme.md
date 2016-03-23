@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Иван Попаль](https://up.htmlacademy.ru/javascript/4/user/16977).
-* Наставник: `Неизвестно`.
+* Наставник: `Олег Мохов`.
 
 ---
 
