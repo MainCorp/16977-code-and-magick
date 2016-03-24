@@ -20,7 +20,9 @@ function getMessage (a, b) {
 		return  "Я прошёл " + [sum] + " шагов";
 	}
 
+	if (typeof(a) == "object" || typeof(b) == "object") {
 		var length = 0;
+		for (var i = 0; i < a.length && i < b.length; i++) {
 			length += a[i] * b[i];
 		}
 		return "Я прошёл" + [length] + " метров";
