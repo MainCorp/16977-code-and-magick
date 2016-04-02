@@ -10,6 +10,8 @@
   var formFieldsText = document.querySelector('.review-fields-text');
   var formReviewMark_1 = document.querySelector('#review-mark-1');
   var formReviewMark_2 = document.querySelector('#review-mark-2');
+  var formReviewSubmit = document.querySelector('.review-submit');
+
 
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
@@ -36,4 +38,14 @@
   formReviewMark_2.onclick = function() {
     formUserText.setAttribute('required', '');
   };
+
+  formReviewSubmit.onsubmit = function(evt) {
+    evt.preventDefault();
+    var dateToExpire = Date.now + 26092800000;
+    document.cookie = 'name=' + 'test';
+
+    formReviewSubmit.submit();
+  };
+
+
 })();
