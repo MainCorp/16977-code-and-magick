@@ -379,63 +379,70 @@
      */ 
 
     _drawPauseScreen: function() {
+      var engine = this.ctx;
       var fontScreen = "16px PT Mono";
       var wordArrayWIN = ["Вы сделали правильное", "действие, вы победили!"];
       var wordArrayFALSE = ["Вы проиграли!:("];
       var wordArrayPAUSE = ["Вы приостановили игру,", "нажмите <пробел>, чтобы", "продолжить."];
       var wordArrayINTRO = ["Приветствую в игре", "Code and Magic.", "Нажмите <пробел> и начните", "играть уже сейчас!"];
+      var positionAflatWord = ["315"];
+      var positionUprightWord = ["115", "135", "155", "175"];
+      var arrayFillStyle = ["rgba(0, 0, 0, 0.7)", "#ffffff"];
+      var aflatFillRect = ["305", "315"];
+      var uprightFillRect = ["105", "115"];
+      var sizeRectangle = ["300", "150"];
 
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = "#ffffff";
-          this.ctx.fillRect(305, 105, 300, 150);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
+          engine.fillStyle = arrayFillStyle[1];
+          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
 
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = "hanging";
-          this.ctx.fillText(wordArrayWIN[0], 315, 115);
-          this.ctx.fillText(wordArrayWIN[1], 315, 135);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.font = fontScreen;
+          engine.textBaseline = "hanging";
+          engine.fillText(wordArrayWIN[0], positionAflatWord[0], positionUprightWord[0]);
+          engine.fillText(wordArrayWIN[1], positionAflatWord[0], positionUprightWord[1]);
           break;
         case Verdict.FAIL:
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = "#ffffff";
-          this.ctx.fillRect(305, 105, 300, 150);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
+          engine.fillStyle = arrayFillStyle[1];
+          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
 
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = "hanging";
-          this.ctx.fillText(wordArrayFALSE[0], 315, 115);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.font = fontScreen;
+          engine.textBaseline = "hanging";
+          engine.fillText(wordArrayFALSE[0], positionAflatWord[0], positionUprightWord[0]);
           break;
         case Verdict.PAUSE:
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = "#ffffff";
-          this.ctx.fillRect(305, 105, 300, 150);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]); 
+          engine.fillStyle = arrayFillStyle[1];
+          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
 
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = "hanging";
-          this.ctx.fillText(wordArrayPAUSE[0], 315, 115);
-          this.ctx.fillText(wordArrayPAUSE[1], 315, 135);
-          this.ctx.fillText(wordArrayPAUSE[2], 315, 155);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.font = fontScreen;
+          engine.textBaseline = "hanging";
+          engine.fillText(wordArrayPAUSE[0], positionAflatWord[0], positionUprightWord[0]);
+          engine.fillText(wordArrayPAUSE[1], positionAflatWord[0], positionUprightWord[1]);
+          engine.fillText(wordArrayPAUSE[2], positionAflatWord[0], positionUprightWord[2]);
           break;
         case Verdict.INTRO:
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = "#ffffff";
-          this.ctx.fillRect(305, 105, 300, 150);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
+          engine.fillStyle = arrayFillStyle[1];
+          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
 
-          this.ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = "hanging";
-          this.ctx.fillText(wordArrayINTRO[0], 315, 115);
-          this.ctx.fillText(wordArrayINTRO[1], 315, 135);
-          this.ctx.fillText(wordArrayINTRO[2], 315, 155);
-          this.ctx.fillText(wordArrayINTRO[3], 315, 175);
+          engine.fillStyle = arrayFillStyle[0];
+          engine.font = fontScreen;
+          engine.textBaseline = "hanging";
+          engine.fillText(wordArrayINTRO[0], positionAflatWord[0], positionUprightWord[0]);
+          engine.fillText(wordArrayINTRO[1], positionAflatWord[0], positionUprightWord[1]);
+          engine.fillText(wordArrayINTRO[2], positionAflatWord[0], positionUprightWord[2]);
+          engine.fillText(wordArrayINTRO[3], positionAflatWord[0], positionUprightWord[3]);
           break;
       }
     },
