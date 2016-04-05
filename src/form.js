@@ -10,6 +10,7 @@
   var formFieldsText = document.querySelector('.review-fields-text');
   var formReviewMark_1 = document.querySelector('#review-mark-1');
   var formReviewMark_2 = document.querySelector('#review-mark-2');
+  var formButton = document.querySelector('.review-submit');
 
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
@@ -21,19 +22,27 @@
     formContainer.classList.add('invisible');
   };
 
-  formUserName.oninput = function(event) {
-    event.preventDefault();
+  formUserName.oninput = function(evt) {
+    evt.preventDefault();
     formFieldsName.classList.add('invisible');
   };
-  formUserText.oninput = function(event) {
-    event.preventDefault();
+
+  formUserName.oninvalid = function(evt) {
+    evt.preventDefault();
+    formButton.setAttribute('disabled', '');
+  };
+
+  formUserText.oninput = function(evt) {
+    evt.preventDefault();
     formFieldsText.classList.add('invisible');
   };
 
-  formReviewMark_1.onclick = function() {
+  formReviewMark_1.onclick = function(evt) {
     formUserText.setAttribute('required', '');
   };
-  formReviewMark_2.onclick = function() {
+
+  formReviewMark_2.onclick = function(evt) {
     formUserText.setAttribute('required', '');
   };
+
 })();
