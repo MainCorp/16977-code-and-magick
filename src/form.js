@@ -4,12 +4,12 @@
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
-  var formUserName = document.querySelector('#review-name');
+  var formUserName = document.querySelector('.review-form-field-name');
   var formFieldsName = document.querySelector('.review-fields-name');
-  var formUserText = document.querySelector('#review-text');
+  var formUserText = document.querySelector('.review-form-field-text');
   var formFieldsText = document.querySelector('.review-fields-text');
-  var formReviewMark_1 = document.querySelector('#review-mark-1');
-  var formReviewMark_2 = document.querySelector('#review-mark-2');
+  var formReviewMark_1 = document.querySelector('.review-mark-label-1');
+  var formReviewMark_2 = document.querySelector('.review-mark-label-2');
   var formButton = document.querySelector('.review-submit');
 
   formOpenButton.onclick = function(evt) {
