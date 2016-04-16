@@ -376,7 +376,7 @@
 
     /**
      * Отрисовка экрана паузы.
-     */ 
+     */
 
     _drawPauseScreen: function() {
       var engine = this.ctx;
@@ -419,7 +419,7 @@
           break;
         case Verdict.PAUSE:
           engine.fillStyle = arrayFillStyle[0];
-          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]); 
+          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
           engine.fillStyle = arrayFillStyle[1];
           engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
 
