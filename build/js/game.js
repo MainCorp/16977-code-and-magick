@@ -381,68 +381,61 @@
     _drawPauseScreen: function() {
       var engine = this.ctx;
       var fontScreen = "16px PT Mono";
-      var wordArrayWIN = ["Вы сделали правильное", "действие, вы победили!"];
-      var wordArrayFALSE = ["Вы проиграли!:("];
-      var wordArrayPAUSE = ["Вы приостановили игру,", "нажмите <пробел>, чтобы", "продолжить."];
-      var wordArrayINTRO = ["Приветствую в игре", "Code and Magic.", "Нажмите <пробел> и начните", "играть уже сейчас!"];
-      var positionAflatWord = ["315"];
-      var positionUprightWord = ["115", "135", "155", "175"];
-      var arrayFillStyle = ["rgba(0, 0, 0, 0.7)", "#ffffff"];
-      var aflatFillRect = ["305", "315"];
-      var uprightFillRect = ["105", "115"];
-      var sizeRectangle = ["300", "150"];
 
+      var textRender = function(text, width) {
+
+      };
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          engine.fillStyle = arrayFillStyle[0];
-          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
-          engine.fillStyle = arrayFillStyle[1];
-          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
+          engine.fillRect(315, 115, 300, 150);
+          engine.fillStyle = "#ffffff";
+          engine.fillRect(305, 105, 300, 150);
 
-          engine.fillStyle = arrayFillStyle[0];
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
           engine.font = fontScreen;
           engine.textBaseline = "hanging";
-          engine.fillText(wordArrayWIN[0], positionAflatWord[0], positionUprightWord[0]);
-          engine.fillText(wordArrayWIN[1], positionAflatWord[0], positionUprightWord[1]);
+          engine.fillText("Вы сделали правильное", 315, 115);
+          engine.fillText("действие, вы победили!", 315, 135);
           break;
         case Verdict.FAIL:
-          engine.fillStyle = arrayFillStyle[0];
-          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
-          engine.fillStyle = arrayFillStyle[1];
-          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
+          engine.fillRect(315, 115, 300, 150);
+          engine.fillStyle = "#ffffff";
+          engine.fillRect(305, 105, 300, 150);
 
-          engine.fillStyle = arrayFillStyle[0];
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
           engine.font = fontScreen;
           engine.textBaseline = "hanging";
-          engine.fillText(wordArrayFALSE[0], positionAflatWord[0], positionUprightWord[0]);
+          engine.fillText("Вы проиграли!:(", 315, 115);
           break;
         case Verdict.PAUSE:
-          engine.fillStyle = arrayFillStyle[0];
-          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
-          engine.fillStyle = arrayFillStyle[1];
-          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
+          engine.fillRect(315, 115, 300, 150);
+          engine.fillStyle = "#ffffff";
+          engine.fillRect(305, 105, 300, 150);
 
-          engine.fillStyle = arrayFillStyle[0];
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
           engine.font = fontScreen;
           engine.textBaseline = "hanging";
-          engine.fillText(wordArrayPAUSE[0], positionAflatWord[0], positionUprightWord[0]);
-          engine.fillText(wordArrayPAUSE[1], positionAflatWord[0], positionUprightWord[1]);
-          engine.fillText(wordArrayPAUSE[2], positionAflatWord[0], positionUprightWord[2]);
+          engine.fillText("Вы приостановили игру,", 315, 115);
+          engine.fillText("нажмите <пробел>, чтобы", 315, 135);
+          engine.fillText("продолжить.", 315, 155);
           break;
         case Verdict.INTRO:
-          engine.fillStyle = arrayFillStyle[0];
-          engine.fillRect(aflatFillRect[1], uprightFillRect[1], sizeRectangle[0], sizeRectangle[1]);
-          engine.fillStyle = arrayFillStyle[1];
-          engine.fillRect(aflatFillRect[0], uprightFillRect[0], sizeRectangle[0], sizeRectangle[1]);
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
+          engine.fillRect(315, 115, 300, 150);
+          engine.fillStyle = "#ffffff";
+          engine.fillRect(305, 105, 300, 150);
 
-          engine.fillStyle = arrayFillStyle[0];
+          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
           engine.font = fontScreen;
           engine.textBaseline = "hanging";
-          engine.fillText(wordArrayINTRO[0], positionAflatWord[0], positionUprightWord[0]);
-          engine.fillText(wordArrayINTRO[1], positionAflatWord[0], positionUprightWord[1]);
-          engine.fillText(wordArrayINTRO[2], positionAflatWord[0], positionUprightWord[2]);
-          engine.fillText(wordArrayINTRO[3], positionAflatWord[0], positionUprightWord[3]);
+          engine.fillText("Приветствую в игре", 315, 115);
+          engine.fillText("Code and Magic.", 315, 135);
+          engine.fillText("Нажмите <пробел> и начните", 315, 155);
+          engine.fillText("играть уже сейчас!", 315, 175);
           break;
       }
     },
