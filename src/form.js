@@ -8,8 +8,8 @@
   var formFieldsName = document.querySelector('.review-fields-name');
   var formUserText = document.querySelector('.review-form-field-text');
   var formFieldsText = document.querySelector('.review-fields-text');
-  var formReviewMark_1 = document.querySelector('.review-mark-label-1');
-  var formReviewMark_2 = document.querySelector('.review-mark-label-2');
+  var formReviewMarkFirst = document.querySelector('.review-mark-label-1');
+  var formReviewMarkSecond = document.querySelector('.review-mark-label-2');
   var formButton = document.querySelector('.review-submit');
 
   formOpenButton.onclick = function(evt) {
@@ -37,11 +37,11 @@
     formFieldsText.classList.add('invisible');
   };
 
-  formReviewMark_1.onclick = function(evt) {
+  formReviewMarkFirst.onclick = function() {
     formUserText.setAttribute('required', '');
   };
 
-  formReviewMark_2.onclick = function(evt) {
+  formReviewMarkSecond.onclick = function() {
     formUserText.setAttribute('required', '');
   };
 
