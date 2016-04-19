@@ -380,62 +380,41 @@
 
     _drawPauseScreen: function() {
       var engine = this.ctx;
-      var fontScreen = "16px PT Mono";
+      var screenRender = function(firstTextLine, secondTextLine, thirdTextLine, fourthTextLine) {
+        engine.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        engine.fillRect(315, 115, 300, 150);
+        engine.fillStyle = '#ffffff';
+        engine.fillRect(305, 105, 300, 150);
 
-      var textRender = function(text, width) {
-
+        engine.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        engine.font = '16px PT Mono';
+        engine.textBaseline = 'hanging';
+        if (firstTextLine) {
+          engine.fillText(firstTextLine, 315, 115);
+        }
+        if (secondTextLine) {
+          engine.fillText(secondTextLine, 315, 135);
+        }
+        if (thirdTextLine) {
+          engine.fillText(thirdTextLine, 315, 155);
+        }
+        if (fourthTextLine) {
+          engine.fillText(fourthTextLine, 315, 175);
+        }
       };
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.fillRect(315, 115, 300, 150);
-          engine.fillStyle = "#ffffff";
-          engine.fillRect(305, 105, 300, 150);
-
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.font = fontScreen;
-          engine.textBaseline = "hanging";
-          engine.fillText("Вы сделали правильное", 315, 115);
-          engine.fillText("действие, вы победили!", 315, 135);
+          screenRender('Вы сделали правильное', 'действие, вы победили!');
           break;
         case Verdict.FAIL:
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.fillRect(315, 115, 300, 150);
-          engine.fillStyle = "#ffffff";
-          engine.fillRect(305, 105, 300, 150);
-
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.font = fontScreen;
-          engine.textBaseline = "hanging";
-          engine.fillText("Вы проиграли!:(", 315, 115);
+          screenRender('Вы проиграли!:(');
           break;
         case Verdict.PAUSE:
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.fillRect(315, 115, 300, 150);
-          engine.fillStyle = "#ffffff";
-          engine.fillRect(305, 105, 300, 150);
-
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.font = fontScreen;
-          engine.textBaseline = "hanging";
-          engine.fillText("Вы приостановили игру,", 315, 115);
-          engine.fillText("нажмите <пробел>, чтобы", 315, 135);
-          engine.fillText("продолжить.", 315, 155);
+          screenRender('Вы приостановили игру,', 'нажмите <пробел>, чтобы', 'продолжить.');
           break;
         case Verdict.INTRO:
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.fillRect(315, 115, 300, 150);
-          engine.fillStyle = "#ffffff";
-          engine.fillRect(305, 105, 300, 150);
-
-          engine.fillStyle = "rgba(0, 0, 0, 0.7)";
-          engine.font = fontScreen;
-          engine.textBaseline = "hanging";
-          engine.fillText("Приветствую в игре", 315, 115);
-          engine.fillText("Code and Magic.", 315, 135);
-          engine.fillText("Нажмите <пробел> и начните", 315, 155);
-          engine.fillText("играть уже сейчас!", 315, 175);
+          screenRender('Приветствую в игре', 'Code and Magic.', 'Нажмите <пробел> и начните.', 'играть уже сейчас!');
           break;
       }
     },
