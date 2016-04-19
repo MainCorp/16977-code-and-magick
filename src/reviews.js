@@ -1,3 +1,5 @@
+'use strict';
+
 var reviewsContainer = document.querySelector('.reviews-list');
 var templateEl = document.querySelector('template');
 var elementClone;
@@ -8,7 +10,7 @@ if ('content' in templateEl) {
 	elementClone = templateEl.querySelector('.review');
 }
 
-var getReviewElement = function(data, container) {
+var createReviewElement = function(data, container) {
 	var element = elementClone.cloneNode(true);
 	element.querySelector('.review-text').textContent = data.description;
 	container.appendChild(element);
@@ -29,5 +31,5 @@ var getReviewElement = function(data, container) {
 };
 
 window.reviews.forEach(function(review) {
-	getReviewElement(review, reviewsContainer);
+	createReviewElement(review, reviewsContainer);
 });
