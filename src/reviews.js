@@ -35,23 +35,28 @@ var getReviewElement = function(data, container) {
 
 var getReviews = function(callback) {
 	var xhr = new XMLHttpRequest();
-
+	var contentLoader = function() {
+		xhr.onerror = function() {
+			reviewsContent.classList.add('reviews-load-failure');
+		};
+		xhr.timeout = 15000;
+		xhr.ontimeout = function() {
+			reviewsContent.classList.add('reviews-load-failure');
+		};
+	};
 	xhr.onload = function(evt) {
 		var requestObj = evt.target;
-		var loadedData = JSON.parse(requestObj.response);
+		try {
+			var loadedData = JSON.parse(requestObj.response);
+		} catch (err) {
+			console.log("Ошибка при соединении");
+		}
 		callback(loadedData);
 	};
-	xhr.onerror = function() {
-		reviewsContent.classList.add('reviews-load-failure');
-	};
-	xhr.timeout = 15000;
-	xhr.ontimeout = function() {
-		reviewsContent.classList.add('reviews-load-failure');
-	};
-
+	contentLoader();
 	xhr.open('GET', REVIEWS_URL);
 	xhr.onreadystatechange = function() {
-		if(xhr.status != 200) {
+		if(xhr.status !== 200) {
 			reviewsContent.classList.add('reviews-list-loading');
 		}
 	};
