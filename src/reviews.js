@@ -1,17 +1,11 @@
 var reviewsContainer = document.querySelector('.reviews-list');
 var templateEl = document.querySelector('template');
-var elementClone;
 var reviewsContent = document.querySelector('.reviews');
+var elementClone = templateEl.content.querySelector('.review');
 
 /** @const {number} */
 
 var REVIEWS_URL = '//o0.github.io/assets/json/reviews.json';
-
-if ('content' in templateEl) {
-	elementClone = templateEl.content.querySelector('.review');
-} else {
-	elementClone = templateEl.querySelector('.review');
-}
 
 var getReviewElement = function(data, container) {
 	var element = elementClone.cloneNode(true);
