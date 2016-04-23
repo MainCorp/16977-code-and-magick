@@ -96,7 +96,7 @@ var setFilterReview = function(filter) {
 var setFiltrationReview = function() {
 	var reviewsFilterItem = reviewsFilter.querySelector('.reviews-filter-item');
 	for(var i = 0; i < reviewsFilterItem.length; i++) {
-		reviewsFilterItemp[i].onclick = function(evt) {
+		reviewsFilterItem[i].onclick = function(evt) {
 			setFilterReview(this.id);
 		}
 	}
