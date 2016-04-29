@@ -5,6 +5,18 @@
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
 
+  var reviewName = document.querySelector('#review-name');
+  var reviewText = document.querySelector('#review-text');
+  var reviewRating = document.querySelectorAll('input[name="review-mark"]');
+  var toolReviewName = document.querySelector('.review-fields-name');
+  var toolReviewText = document.querySelector('.review-fields-text');
+  var reviewSubmit = document.querySelector('.review-submit');
+  var reviewFields = toolReviewName.parentNode;
+  reviewName.required = true;
+  reviewText.required = true;
+  reviewSubmit.disabled = true;
+
+
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
@@ -16,36 +28,45 @@
   };
 
   var validationSendingResponse = function() {
-    var formResponse = document.forms[1];
-    var formResponseMarkCollection = formResponse.elements['review-mark'];
-    var formResponseName = document.querySelector('.review-form-field-name');
-    var formResponseText = document.querySelector('.review-form-field-text');
-    var firstElMarkCollection = formResponseMarkCollection[0];
-    var secondElMarkCollection = formResponseMarkCollection[1];
-    var reviewName = document.querySelector('.review-fields-name');
-    var reviewText = document.querySelector('.review-fields-text');
+    var nameValid = reviewName.validity.valid;
+    var textValid = reviewText.validity.valid;
 
-    formResponseName.setAttribute('required', '');
+    if (nameValid && textValid) {
+      reviewFields.classList.add('invisible');
+      reviewSubmit.disabled = false;
+    } else if (!nameValid && textValid) {
+      toolReviewName.hidden = false;
+      toolReviewText.hidden = true;
+      reviewSubmit.disabled = true;
+    } else if (nameValid && !textValid) {
+      toolReviewName.hidden = true;
+      toolReviewText.hidden = false;
+      reviewSubmit.disabled = true;
+    } else if (!nameValid && !textValid) {
+      toolReviewName.hidden = false;
+      toolReviewText.hidden = false;
+      reviewSubmit.disabled = true;
+      reviewFields.classList.remove('invisible');
+    }
 
-    firstElMarkCollection.onclick = function() {
-      formResponseText.setAttribute('required', '');
-    };
-
-    secondElMarkCollection.onclick = function() {
-      formResponseText.setAttribute('required', '');
-    };
-
-    formResponseName.oninput = function(evt) {
-      evt.preventDefault();
-      reviewName.classList.add('invisible');
-    };
-
-    formResponseText.oninput = function(evt) {
-      evt.preventDefault();
-      reviewText.classList.add('invisible');
-    };
   };
 
-  validationSendingResponse();
+  for (var i = 0; i < reviewRating.length; i++) {
+    reviewRating[i].onclick = function() {
+      if (this.value < 3) {
+        reviewText.required = true;
+        reviewSubmit.disabled = true;
+        validationSendingResponse();
+      } else {
+        reviewText.required = false;
+        reviewSubmit.disabled = false;
+        validationSendingResponse();
+      }
+    };
+  }
+
+  reviewName.oninput = validationSendingResponse;
+
+  reviewText.oninput = validationSendingResponse;
 
 })();
