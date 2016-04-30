@@ -12,7 +12,6 @@
   var toolReviewText = document.querySelector('.review-fields-text');
   var reviewSubmit = document.querySelector('.review-submit');
   var reviewFields = toolReviewName.parentNode;
-  var reviewForm = document.querySelector('.review-form');
   reviewName.required = true;
   reviewText.required = true;
   reviewSubmit.disabled = true;
@@ -28,7 +27,7 @@
     formContainer.classList.add('invisible');
   };
 
-/* Проверка формы на валидность */
+  /* Функция проверки на валидность */
 
   var validationSendingResponse = function() {
     var nameValid = reviewName.validity.valid;
@@ -38,23 +37,23 @@
       reviewFields.classList.add('invisible');
       reviewSubmit.disabled = false;
     } else if (!nameValid && textValid) {
-      toolReviewName.hidden = false;
-      toolReviewText.hidden = true;
+      toolReviewName.classList.remove('invisible');
+      toolReviewText.classList.add('invisible');
       reviewSubmit.disabled = true;
     } else if (nameValid && !textValid) {
-      toolReviewName.hidden = true;
-      toolReviewText.hidden = false;
+      toolReviewName.classList.add('invisible');
+      toolReviewText.classList.remove('invisible');
       reviewSubmit.disabled = true;
     } else if (!nameValid && !textValid) {
-      toolReviewName.hidden = false;
-      toolReviewText.hidden = false;
+      toolReviewName.classList.remove('invisible');
+      toolReviewText.classList.remove('invisible');
       reviewSubmit.disabled = true;
       reviewFields.classList.remove('invisible');
     }
 
   };
 
-/* Если оценка формы меньше 3, то поле описания будет required */
+  /* Если выбрали оценку < 3 , то добавит required к отзыву */
 
   for (var i = 0; i < reviewRating.length; i++) {
     reviewRating[i].onclick = function() {
@@ -70,18 +69,35 @@
     };
   }
 
+  /* При нажатии на попап 'Добавить свой' */
+
+  formOpenButton.onclick = function(evt) {
+    evt.preventDefault();
+    formContainer.classList.remove('invisible');
+    reviewText.required = false;
+    reviewSubmit.disabled = false;
+    validationSendingResponse();
+  };
+
+  /* Проверка полей на валидность */
+
   reviewName.oninput = validationSendingResponse;
 
   reviewText.oninput = validationSendingResponse;
 
   /* Срок жизни куки */
 
-  reviewForm.onsubmit = function(evt) {
+  reviewSubmit.onsubmit = function(evt) {
     evt.preventDefault();
     var today = new Date();
     var lastBirthday = new Date(today.getFullYear(), 6, 4);
-    var cookiesLife = new Date((+today - +lastBirthday) + +today);
-
+    var cookiesLife;
+    if (lastBirthday < today) {
+      cookiesLife = Math.floor((today - lastBirthday) / 24 / 60 / 60 / 1000);
+    } else {
+      lastBirthday.setFullYear(lastBirthday.getFullYear() - 1);
+      cookiesLife = Math.floor((today - lastBirthday) / 24 / 60 / 60 / 1000);
+    }
   };
 
 })();

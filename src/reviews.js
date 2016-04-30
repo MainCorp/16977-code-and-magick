@@ -20,6 +20,7 @@ var receiveReviewsElement = function(data, container) {
 
   var photoUser = new Image();
   var reviewAuthor = element.querySelector('.review-author');
+  reviewAuthor.src = data.author.picture;
 
   photoUser.onload = function(evt) {
     reviewAuthor.style.backgroundImage = 'url(\'' + evt.target.src + '\')';
@@ -31,7 +32,6 @@ var receiveReviewsElement = function(data, container) {
     element.classList.add('review-load-failure');
   };
 
-  reviewsContainer.replaceChild(reviewAuthor.src = data.author.picture);
 
   return element;
 };
