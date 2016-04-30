@@ -35,16 +35,16 @@
       reviewFields.classList.add('invisible');
       reviewSubmit.disabled = false;
     } else if (!nameValid && textValid) {
-      toolReviewName.hidden = false;
-      toolReviewText.hidden = true;
+      toolReviewName.classList.remove('invisible');
+      toolReviewText.classList.add('invisible');
       reviewSubmit.disabled = true;
     } else if (nameValid && !textValid) {
-      toolReviewName.hidden = true;
-      toolReviewText.hidden = false;
+      toolReviewName.classList.add('invisible');
+      toolReviewText.classList.remove('invisible');
       reviewSubmit.disabled = true;
     } else if (!nameValid && !textValid) {
-      toolReviewName.hidden = false;
-      toolReviewText.hidden = false;
+      toolReviewName.classList.remove('invisible');
+      toolReviewText.classList.remove('invisible');
       reviewSubmit.disabled = true;
       reviewFields.classList.remove('invisible');
     }
@@ -64,6 +64,14 @@
       }
     };
   }
+
+  formOpenButton.onclick = function(evt) {
+    evt.preventDefault();
+    formContainer.classList.remove('invisible');
+    reviewText.required = false;
+    reviewSubmit.disabled = false;
+    validationSendingResponse();
+  };
 
   reviewName.oninput = validationSendingResponse;
 
