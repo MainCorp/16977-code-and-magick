@@ -75,10 +75,11 @@
     return cookiesLife;
   };
 
+
   reviewForm.onsubmit = function(evt) {
     evt.preventDefault();
-    cookies.set('Username', reviewName.value, {expires: cookiesLifeTerm});
-    cookies.set('Assessment', rating.value, {expires: cookiesLifeTerm});
+    cookies.set('Username', reviewName.value, {expires: cookiesLifeTerm()});
+    cookies.set('Assessment', rating.value, {expires: cookiesLifeTerm()});
 
     this.submit();
   };
