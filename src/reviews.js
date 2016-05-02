@@ -11,26 +11,26 @@ var receiveReviewsElement = function(data, container) {
   var reviewRating = element.querySelector('.review-rating');
   var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
 
-  var calcRating = function(ratingNumber) {
-    reviewRating.classList.add(reviewRatingClass[ratingNumber]);
-  };
-  calcRating(data.rating - 2);
+  reviewRating.classList.add(reviewRatingClass[data.rating - 2]);
 
   container.appendChild(element);
 
   var photoUser = new Image();
   var reviewAuthor = element.querySelector('.review-author');
-  reviewAuthor.src = data.author.picture;
 
   photoUser.onload = function(evt) {
     reviewAuthor.style.backgroundImage = 'url(\'' + evt.target.src + '\')';
     reviewAuthor.style.height = '124px';
     reviewAuthor.style.width = '124px';
+
+    reviewAuthor.replaceChild(data.author.picture, reviewAuthor.style.backgroundImage);
   };
 
   photoUser.onerror = function() {
-    element.classList.add('review-load-failure');
+    reviewAuthor.classList.add('review-load-failure');
   };
+
+  reviewAuthor.src = data.author.picture;
 
 
   return element;
