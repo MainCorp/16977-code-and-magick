@@ -9,12 +9,12 @@ var receiveReviewsElement = function(data, container) {
   var element = elementToClone.cloneNode(true);
   element.querySelector('.review-text').textContent = data.description;
   var reviewRating = element.querySelector('.review-rating');
-  reviewRating.style.display = 'inline-block';
+  var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
 
-  for (var i = 1; i < data.rating; i++) {
-    var reviewRatingDoble = reviewRating.cloneNode(true);
-    element.insertBefore(reviewRatingDoble, reviewRating);
-  }
+  var calcRating = function(ratingNumber) {
+    reviewRating.classList.add(reviewRatingClass[ratingNumber]);
+  };
+  calcRating(data.rating - 2);
 
   container.appendChild(element);
 
