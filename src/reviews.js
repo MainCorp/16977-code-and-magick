@@ -17,13 +17,15 @@ var receiveReviewsElement = function(data, container) {
 
   var photoUser = new Image();
   var reviewAuthor = element.querySelector('.review-author');
-  reviewAuthor.alt = 'Аватарка пользователя ' + data.author.name;
-  reviewAuthor.title = data.author.name;
 
   photoUser.onload = function() {
     reviewAuthor.classList.add('review-author');
+    reviewAuthor.height = 124;
+    reviewAuthor.width = 124;
+    reviewAuthor.alt = 'Аватарка пользователя ' + data.author.name;
+    reviewAuthor.title = data.author.name;
 
-    elementToClone.replaceChild(photoUser, reviewAuthor);
+    element.replaceChild(photoUser, reviewAuthor);
   };
 
   photoUser.onerror = function() {
@@ -31,8 +33,6 @@ var receiveReviewsElement = function(data, container) {
   };
 
   reviewAuthor.src = data.author.picture;
-  reviewAuthor.height = 124;
-  reviewAuthor.width = 124;
 
   return element;
 };
