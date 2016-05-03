@@ -3,13 +3,13 @@
 var reviewsContainer = document.querySelector('.reviews-list');
 var templateElement = document.querySelector('template');
 var elementToClone = templateElement.content.querySelector('.review');
+var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
 
 
 var receiveReviewsElement = function(data, container) {
   var element = elementToClone.cloneNode(true);
   element.querySelector('.review-text').textContent = data.description;
   var reviewRating = element.querySelector('.review-rating');
-  var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
 
   reviewRating.classList.add(reviewRatingClass[data.rating - 2]);
 
@@ -33,8 +33,6 @@ var receiveReviewsElement = function(data, container) {
   };
 
   reviewAuthor.src = data.author.picture;
-
-  return element;
 };
 
 window.reviews.forEach(function(review) {
