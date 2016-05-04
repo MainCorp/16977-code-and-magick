@@ -103,8 +103,9 @@ var addActiveFilter = function(valueReview) {
       var todaysDate = new Date();
       todaysDate = todaysDate.setDate(todaysDate.getDate() - 14);
       reviewsToFilter = reviewsToFilter.filter(function(a) {
-        return a.date > todaysDate;
+        return new Date(a.date) > todaysDate;
       });
+
       reviewsToFilter.sort(function(a, b) {
         return b.date - a.date;
       });
