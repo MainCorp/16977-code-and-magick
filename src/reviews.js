@@ -80,7 +80,6 @@ var getReviews = function(callback) {
 
   xhr.open('GET', REVIEWS_LOAD_URL);
   xhr.send();
-  contentReviews.classList.remove('.reviews-list-loading');
 };
 
 var renderReviews = function(reviewsData) {
@@ -140,6 +139,7 @@ var addActiveFilter = function(valueReview) {
 getReviews(function(loadedReviews) {
   reviews = loadedReviews;
   renderReviews(reviews);
+  contentReviews.classList.remove('.reviews-list-loading');
 });
 
 filterReviews.classList.remove('invisible');
