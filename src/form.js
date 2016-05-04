@@ -1,6 +1,7 @@
 'use strict';
 
 (function() {
+  var cookies = require('browser-cookies');
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
@@ -58,5 +59,32 @@
   reviewName.oninput = validationSendingResponse;
 
   reviewText.oninput = validationSendingResponse;
+
+  /* Срок жизни куки */
+
+  var cookiesLifeTerm = function() {
+    var today = new Date();
+    var lastBirthday = new Date(today.getFullYear(), 6, 4);
+    var cookiesLife = Math.floor((today - lastBirthday) / 24 / 60 / 60 / 1000);
+
+    if (lastBirthday > today) {
+      lastBirthday.setFullYear(lastBirthday.getFullYear() - 1);
+      cookiesLife = Math.floor((today - lastBirthday) / 24 / 60 / 60 / 1000);
+    }
+
+    return cookiesLife;
+  };
+
+
+  reviewForm.onsubmit = function(evt) {
+    evt.preventDefault();
+    cookies.set('Username', reviewName.value, {expires: cookiesLifeTerm()});
+    cookies.set('Assessment', rating.value, {expires: cookiesLifeTerm()});
+
+    this.submit();
+  };
+
+  reviewName.value = cookies.get('Username');
+  rating.value = cookies.get('Assessment');
 
 })();
