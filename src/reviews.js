@@ -1,10 +1,12 @@
 'use strict';
 
 var reviewsContainer = document.querySelector('.reviews-list');
+var filterReviews = document.querySelector('.reviews-filter');
 var templateElement = document.querySelector('template');
 var elementToClone = templateElement.content.querySelector('.review');
 var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
 
+filterReviews.classList.add('invisible');
 
 var receiveReviewsElement = function(data, container) {
   var element = elementToClone.cloneNode(true);
@@ -29,7 +31,7 @@ var receiveReviewsElement = function(data, container) {
   };
 
   photoUser.onerror = function() {
-    reviewAuthor.classList.add('review-load-failure');
+    element.classList.add('review-load-failure');
   };
 
   reviewAuthor.src = data.author.picture;
@@ -38,3 +40,5 @@ var receiveReviewsElement = function(data, container) {
 window.reviews.forEach(function(review) {
   receiveReviewsElement(review, reviewsContainer);
 });
+
+filterReviews.classList.remove('invisible');
