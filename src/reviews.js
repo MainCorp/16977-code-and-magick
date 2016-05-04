@@ -24,6 +24,8 @@ var receiveReviewsElement = function(data, container) {
     photoUser.classList.add('review-author');
     photoUser.height = 124;
     photoUser.width = 124;
+    photoUser.alt = 'Аватарка пользователя ' + data.author.name;
+    photoUser.title = data.author.name;
 
     element.replaceChild(photoUser, reviewAuthor);
   };
@@ -32,9 +34,7 @@ var receiveReviewsElement = function(data, container) {
     element.classList.add('review-load-failure');
   };
 
-  reviewAuthor.src = data.author.picture;
-  reviewAuthor.alt = 'Аватарка юзера ' + data.author.name;
-  reviewAuthor.title = data.author.name;
+  photoUser.src = data.author.picture;
 };
 
 window.reviews.forEach(function(review) {
