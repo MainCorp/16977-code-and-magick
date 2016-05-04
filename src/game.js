@@ -377,19 +377,65 @@
     /**
      * Отрисовка экрана паузы.
      */
+
     _drawPauseScreen: function() {
+      var fontScreen = '16px PT Mono';
+      var wordArrayWIN = ['Вы сделали правильное', 'действие, вы победили!'];
+      var wordArrayFALSE = ['Вы проиграли!:('];
+      var wordArrayPAUSE = ['Вы приостановили игру,', 'нажмите <пробел>, чтобы', 'продолжить.'];
+      var wordArrayINTRO = ['Приветствую в игре', 'Code and Magic.', 'Нажмите <пробел> и начните', 'играть уже сейчас!'];
+
+
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fillRect(315, 115, 300, 150);
+          this.ctx.fillStyle = '#ffffff';
+          this.ctx.fillRect(305, 105, 300, 150);
+
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.font = fontScreen;
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillText(wordArrayWIN[0], 315, 115);
+          this.ctx.fillText(wordArrayWIN[1], 315, 135);
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fillRect(315, 115, 300, 150);
+          this.ctx.fillStyle = '#ffffff';
+          this.ctx.fillRect(305, 105, 300, 150);
+
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.font = fontScreen;
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillText(wordArrayFALSE[0], 315, 115);
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fillRect(315, 115, 300, 150);
+          this.ctx.fillStyle = '#ffffff';
+          this.ctx.fillRect(305, 105, 300, 150);
+
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.font = fontScreen;
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillText(wordArrayPAUSE[0], 315, 115);
+          this.ctx.fillText(wordArrayPAUSE[1], 315, 135);
+          this.ctx.fillText(wordArrayPAUSE[2], 315, 155);
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fillRect(315, 115, 300, 150);
+          this.ctx.fillStyle = '#ffffff';
+          this.ctx.fillRect(305, 105, 300, 150);
+
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.font = fontScreen;
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillText(wordArrayINTRO[0], 315, 115);
+          this.ctx.fillText(wordArrayINTRO[1], 315, 135);
+          this.ctx.fillText(wordArrayINTRO[2], 315, 155);
+          this.ctx.fillText(wordArrayINTRO[3], 315, 175);
           break;
       }
     },
