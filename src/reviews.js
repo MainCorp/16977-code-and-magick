@@ -97,11 +97,11 @@ filterReviews.onchange = function() {
 
 var addActiveFilter = function(valueReview) {
   var reviewsToFilter = reviews.slice(0);
-  var todaysDate = new Date();
-  todaysDate = todaysDate.setDate(todaysDate.getDate() - 14);
 
   switch (valueReview) {
     case Filter.RECENT:
+      var todaysDate = new Date();
+      todaysDate = todaysDate.setDate(todaysDate.getDate() - 14);
       reviewsToFilter = reviewsToFilter.filter(function(a) {
         return a.date > todaysDate;
       });
