@@ -21,11 +21,9 @@ var receiveReviewsElement = function(data, container) {
   var reviewAuthor = element.querySelector('.review-author');
 
   photoUser.onload = function() {
-    reviewAuthor.classList.add('review-author');
-    reviewAuthor.height = 124;
-    reviewAuthor.width = 124;
-    reviewAuthor.alt = 'Аватарка пользователя ' + data.author.name;
-    reviewAuthor.title = data.author.name;
+    photoUser.classList.add('review-author');
+    photoUser.height = 124;
+    photoUser.width = 124;
 
     element.replaceChild(photoUser, reviewAuthor);
   };
@@ -35,6 +33,8 @@ var receiveReviewsElement = function(data, container) {
   };
 
   reviewAuthor.src = data.author.picture;
+  reviewAuthor.alt = 'Аватарка юзера ' + data.author.name;
+  reviewAuthor.title = data.author.name;
 };
 
 window.reviews.forEach(function(review) {
