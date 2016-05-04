@@ -8,8 +8,8 @@
   var formFieldsName = document.querySelector('.review-fields-name');
   var formUserText = document.querySelector('#review-text');
   var formFieldsText = document.querySelector('.review-fields-text');
-  var formReviewMark_1 = document.querySelector('#review-mark-1');
-  var formReviewMark_2 = document.querySelector('#review-mark-2');
+  var formReviewMark1 = document.querySelector('#review-mark-1');
+  var formReviewMark2 = document.querySelector('#review-mark-2');
   var formButton = document.querySelector('.review-submit');
 
   formOpenButton.onclick = function(evt) {
@@ -37,22 +37,19 @@
     formFieldsText.classList.add('invisible');
   };
 
-  formReviewMark_1.onclick = function(evt) {
+  formReviewMark1.onclick = function() {
     formUserText.setAttribute('required', '');
   };
 
-  formReviewMark_2.onclick = function(evt) {
+  formReviewMark2.onclick = function() {
     formUserText.setAttribute('required', '');
   };
 
   formButton.onsubmit = function(evt) {
     evt.preventDefault();
-    var dateToExpire = Date.now + 26092800000;
-    document.cookie = 'name=' + 'test';
 
     formButton.submit();
   };
 
 
 })();
-
