@@ -55,6 +55,11 @@ var receiveReviewsElement = function(data, container) {
 
 /* Получаем с помощью XMLHttpRequest'a данные из файла */
 
+var includePreloader = function() {
+  contentReviews.classList.add('reviews-load-failure');
+  contentReviews.classList.remove('.reviews-list-loading');
+};
+
 var getReviews = function(callback) {
   var xhr = new XMLHttpRequest();
 
@@ -62,22 +67,20 @@ var getReviews = function(callback) {
     contentReviews.classList.add('.reviews-list-loading');
     var loadedData = JSON.parse(evt.target.response);
     callback(loadedData);
-    contentReviews.classList.remove('.reviews-list-loading');
   };
 
   xhr.onerror = function() {
-    contentReviews.classList.add('reviews-load-failure');
-    contentReviews.classList.remove('.reviews-list-loading');
+    includePreloader();
   };
 
   xhr.timeout = 5000;
   xhr.ontimeout = function() {
-    contentReviews.classList.add('reviews-load-failure');
-    contentReviews.classList.remove('.reviews-list-loading');
+    includePreloader();
   };
 
   xhr.open('GET', REVIEWS_LOAD_URL);
   xhr.send();
+  contentReviews.classList.remove('.reviews-list-loading');
 };
 
 var renderReviews = function(reviewsData) {
@@ -89,7 +92,10 @@ var renderReviews = function(reviewsData) {
 
 /* Фильтры отзывов */
 
-filterReviews.onclick = function() {
+var todaysDate = new Date();
+todaysDate = todaysDate.setDate(todaysDate.getDate() - 14);
+
+filterReviews.onchange = function() {
   addActiveFilter(elementFilterReviews.value);
 };
 
@@ -97,12 +103,8 @@ var addActiveFilter = function(valueReview) {
   var reviewsToFilter = reviews.slice(0);
 
   switch (valueReview) {
-    case Filter.ALL:
-      break;
     case Filter.RECENT:
-      reviewsToFilter.filter(function(a) {
-        var todaysDate = new Date();
-        todaysDate.setDate(todaysDate.getDate() - 14);
+      reviewsToFilter = reviewsToFilter.filter(function(a) {
         return a.date > todaysDate;
       });
       reviewsToFilter.sort(function(a, b) {
@@ -110,7 +112,7 @@ var addActiveFilter = function(valueReview) {
       });
       break;
     case Filter.GOOD:
-      reviewsToFilter.filter(function(a) {
+      reviewsToFilter = reviewsToFilter.filter(function(a) {
         return a.rating > 2;
       });
       reviewsToFilter.sort(function(a, b) {
@@ -118,7 +120,7 @@ var addActiveFilter = function(valueReview) {
       });
       break;
     case Filter.BAD:
-      reviewsToFilter.filter(function(a) {
+      reviewsToFilter = reviewsToFilter.filter(function(a) {
         return a.rating < 3;
       });
       reviewsToFilter.sort(function(a, b) {
