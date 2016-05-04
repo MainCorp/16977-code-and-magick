@@ -91,15 +91,14 @@ var renderReviews = function(reviewsData) {
 
 /* Фильтры отзывов */
 
-var todaysDate = new Date();
-todaysDate = todaysDate.setDate(todaysDate.getDate() - 14);
-
 filterReviews.onchange = function() {
   addActiveFilter(elementFilterReviews.value);
 };
 
 var addActiveFilter = function(valueReview) {
   var reviewsToFilter = reviews.slice(0);
+  var todaysDate = new Date();
+  todaysDate = todaysDate.setDate(todaysDate.getDate() - 14);
 
   switch (valueReview) {
     case Filter.RECENT:
