@@ -90,16 +90,10 @@ var getReviews = function(callback) {
 
 /* Кнопка 'Показать ещё' */
 
-var pageOpen = function(elementReviews, number, sizePageReviews) {
-  return number < Math.floor(elementReviews.length / sizePageReviews);
-};
-
 var toShowButtonActive = function() {
   toShowButton.addEventListener('click', function() {
-    if (pageOpen(reviews, pageNumber, PAGE_SIZE)) {
-      pageNumber++;
-      renderReviews(reviewsToFilter, pageNumber);
-    }
+    pageNumber++;
+    renderReviews(reviewsToFilter, pageNumber);
   });
 };
 
