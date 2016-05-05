@@ -114,7 +114,12 @@ var renderReviews = function(reviewsData, page, replaced) {
   reviewsData.slice(from, to).forEach(function(review) {
     receiveReviewsElement(review, reviewsContainer);
   });
-  toShowButton.classList.toggle('invisible', to > reviewsToFilter.length);
+
+  if (to < reviewsToFilter.length) {
+    toShowButton.classList.remove('invisible');
+  } else {
+    toShowButton.classList.add('invisible');
+  }
 };
 
 /* Фильтры отзывов */
