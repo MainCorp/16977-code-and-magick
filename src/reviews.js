@@ -115,7 +115,7 @@ var renderReviews = function(reviewsData, page, replaced) {
     receiveReviewsElement(review, reviewsContainer);
   });
 
-  if (to < reviewsToFilter.length) {
+  if (to <= reviewsToFilter.length) {
     toShowButton.classList.remove('invisible');
   } else {
     toShowButton.classList.add('invisible');
