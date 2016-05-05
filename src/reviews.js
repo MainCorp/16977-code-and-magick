@@ -109,9 +109,7 @@ var renderReviews = function(reviewsData, page, replaced) {
     receiveReviewsElement(review, reviewsContainer);
   });
 
-  if (to <= reviewsToFilter.length) {
-    toShowButton.classList.remove('invisible');
-  } else {
+  if (to >= reviewsToFilter.length) {
     toShowButton.classList.add('invisible');
   }
 };
@@ -125,6 +123,7 @@ filterReviews.addEventListener('change', function() {
 var addActiveFilter = function(valueReview) {
   pageNumber = 0;
   reviewsToFilter = reviews.slice(0);
+  toShowButton.classList.remove('invisible');
 
   switch (valueReview) {
     case Filter.RECENT:
