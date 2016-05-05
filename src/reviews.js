@@ -8,8 +8,14 @@ var contentReviews = document.querySelector('.reviews');
 var elementToClone = templateElement.content.querySelector('.review');
 var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
 var reviews;
+var reviewsToFilter = [];
+var toShowButton = document.querySelector('.reviews-controls-more');
 
 var REVIEWS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
+
+var PAGE_SIZE = 3;
+
+var pageNumber;
 
 var Filter = {
   'ALL': 'reviews-all',
@@ -82,21 +88,42 @@ var getReviews = function(callback) {
   xhr.send();
 };
 
-var renderReviews = function(reviewsData) {
-  reviewsContainer.innerHTML = '';
-  reviewsData.forEach(function(review) {
+/* Кнопка 'Показать ещё' */
+
+var toShowButtonActive = function() {
+  toShowButton.addEventListener('click', function() {
+    pageNumber++;
+    renderReviews(reviewsToFilter, pageNumber);
+  });
+};
+
+var renderReviews = function(reviewsData, page, replaced) {
+  if (replaced) {
+    reviewsContainer.innerHTML = '';
+  }
+
+  var from = page * PAGE_SIZE;
+  var to = from + PAGE_SIZE;
+
+  reviewsData.slice(from, to).forEach(function(review) {
     receiveReviewsElement(review, reviewsContainer);
   });
+
+  if (to >= reviewsToFilter.length) {
+    toShowButton.classList.add('invisible');
+  }
 };
 
 /* Фильтры отзывов */
 
-filterReviews.onchange = function() {
+filterReviews.addEventListener('change', function() {
   addActiveFilter(elementFilterReviews.value);
-};
+});
 
 var addActiveFilter = function(valueReview) {
-  var reviewsToFilter = reviews.slice(0);
+  pageNumber = 0;
+  reviewsToFilter = reviews.slice(0);
+  toShowButton.classList.remove('invisible');
 
   switch (valueReview) {
     case Filter.RECENT:
@@ -133,12 +160,13 @@ var addActiveFilter = function(valueReview) {
       break;
   }
 
-  renderReviews(reviewsToFilter);
+  renderReviews(reviewsToFilter, pageNumber, true);
 };
 
 getReviews(function(loadedReviews) {
   reviews = loadedReviews;
-  renderReviews(reviews);
+  addActiveFilter(Filter.ALL);
+  toShowButtonActive();
   contentReviews.classList.remove('.reviews-list-loading');
 });
 
