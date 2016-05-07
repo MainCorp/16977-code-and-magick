@@ -117,7 +117,9 @@ var renderReviews = function(reviewsData, page, replaced) {
 /* Фильтры отзывов */
 
 filterReviews.addEventListener('change', function() {
-  addActiveFilter(elementFilterReviews.value);
+  if (elementFilterReviews.value !== elementFilterReviews) {
+    addActiveFilter(elementFilterReviews.value);
+  }
 });
 
 var addActiveFilter = function(valueReview) {

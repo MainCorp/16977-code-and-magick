@@ -737,27 +737,23 @@
 
   var findsCloudsPosition = function() {
     headerClouds.style.backgroundPosition = window.pageYOffset + 'px';
-    console.log(headerClouds.style.backgroundPosition);
   };
 
   var moveClouds = function() {
-    if (headerClouds.getBoundingClientRect().bottom > 0) {
-      window.addEventListener('scroll', findsCloudsPosition());
-    } else {
-      window.removeEventListener('scroll', findsCloudsPosition());
-    }
+    window.addEventListener('scroll', findsCloudsPosition());
   };
 
   var stopGame = function() {
-    if(contentGame.getBoundingClientRect().bottom < 0) {
-      game.setGameStatus(Game.Verdict.PAUSE);
-    }
+    game.setGameStatus(Game.Verdict.PAUSE);
   };
 
   window.addEventListener('scroll', function() {
+    if (contentGame.getBoundingClientRect().bottom < 0) {
+      window.removeEventListener('scroll', findsCloudsPosition());
+      stopGame();
+    }
     clearTimeout(scrollTime);
     scrollTime = setTimeout(moveClouds(), 100);
-    stopGame();
   });
 
 })();
