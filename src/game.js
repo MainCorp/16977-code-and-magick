@@ -730,7 +730,7 @@
   var headerClouds = document.querySelector('.header-clouds');
   var contentGame = document.querySelector('.demo');
   var game = new Game(contentGame);
-  var visibleClouds = false;
+  var visibleClouds = true;
   var timer;
 
   game.initializeLevelAndStart();
@@ -752,9 +752,9 @@
     }, 100);
 
     if (visibleClouds) {
-      stopGame();
-    } else {
       findsCloudsPosition();
+    } else {
+      stopGame();
     }
   });
 
