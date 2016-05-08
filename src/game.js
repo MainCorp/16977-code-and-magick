@@ -745,7 +745,6 @@
 
   var moveClouds = function() {
     if (contentGame.getBoundingClientRect().bottom < 0) {
-      window.removeEventListener('scroll', findsCloudsPosition());
       stopGame();
     } else {
       findsCloudsPosition();
