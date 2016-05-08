@@ -730,13 +730,11 @@
   var headerClouds = document.querySelector('.header-clouds');
   var contentGame = document.querySelector('.demo');
   var game = new Game(contentGame);
+  var visibleClouds = false;
+  var timer;
 
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
-
-  var visibleHeaderClouds = setTimeout(function() {
-    return headerClouds.getBoundingClientRect().bottom > 0;
-  }, 10);
 
   var findsCloudsPosition = function() {
     headerClouds.style.backgroundPosition = window.pageYOffset + 'px';
@@ -747,13 +745,17 @@
   };
 
   window.addEventListener('scroll', function() {
-    if (visibleHeaderClouds) {
-      findsCloudsPosition();
-    } else {
-      stopGame();
-    }
+    clearTimeout(timer);
 
-    console.log(visibleHeaderClouds);
+    timer = setTimeout(function() {
+      visibleClouds = headerClouds.getBoundingClientRect().bottom > 0;
+    }, 100);
+
+    if (visibleClouds) {
+      stopGame();
+    } else {
+      findsCloudsPosition();
+    }
   });
 
 })();
