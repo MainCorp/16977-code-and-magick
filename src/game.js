@@ -729,11 +729,14 @@
 
   var headerClouds = document.querySelector('.header-clouds');
   var contentGame = document.querySelector('.demo');
-  var scrollTime;
   var game = new Game(contentGame);
 
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
+
+  var visibleHeaderClouds = setTimeout(function() {
+    return headerClouds.getBoundingClientRect().bottom > 0;
+  }, 10);
 
   var findsCloudsPosition = function() {
     headerClouds.style.backgroundPosition = window.pageYOffset + 'px';
@@ -743,17 +746,14 @@
     game.setGameStatus(Game.Verdict.PAUSE);
   };
 
-  var moveClouds = function() {
-    if (contentGame.getBoundingClientRect().bottom < 0) {
-      stopGame();
-    } else {
-      findsCloudsPosition();
-    }
-  };
-
   window.addEventListener('scroll', function() {
-    clearTimeout(scrollTime);
-    scrollTime = setTimeout(moveClouds(), 100);
+    if (visibleHeaderClouds) {
+      findsCloudsPosition();
+    } else {
+      stopGame();
+    }
+
+    console.log(visibleHeaderClouds);
   });
 
 })();
