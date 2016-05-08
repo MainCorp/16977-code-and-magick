@@ -735,26 +735,24 @@
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
 
+  var findsCloudsPosition = function() {
+    headerClouds.style.backgroundPosition = window.pageYOffset + 'px';
+  };
+
+  var stopGame = function() {
+    game.setGameStatus(Game.Verdict.PAUSE);
+  };
+
+  var moveClouds = function() {
+    if (contentGame.getBoundingClientRect().bottom < 0) {
+      window.removeEventListener('scroll', findsCloudsPosition());
+      stopGame();
+    } else {
+      findsCloudsPosition();
+    }
+  };
 
   window.addEventListener('scroll', function() {
-
-    var findsCloudsPosition = function() {
-      headerClouds.style.backgroundPosition = window.pageYOffset + 'px';
-    };
-
-    var stopGame = function() {
-      game.setGameStatus(Game.Verdict.PAUSE);
-    };
-
-    var moveClouds = function() {
-      if (contentGame.getBoundingClientRect().bottom < 0) {
-        window.removeEventListener('scroll', findsCloudsPosition());
-        stopGame();
-      } else {
-        findsCloudsPosition();
-      }
-    };
-
     clearTimeout(scrollTime);
     scrollTime = setTimeout(moveClouds(), 100);
   });
