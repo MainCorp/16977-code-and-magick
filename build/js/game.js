@@ -378,43 +378,36 @@
      * Отрисовка экрана паузы.
      */
 
-    screenRender: function(firstTextLine, secondTextLine, thirdTextLine, fourthTextLine) {
+    screenRender: function(lineCollection) {
       var engine = this.ctx;
+
       engine.fillStyle = 'rgba(0, 0, 0, 0.7)';
       engine.fillRect(315, 115, 300, 150);
       engine.fillStyle = '#ffffff';
       engine.fillRect(305, 105, 300, 150);
-
       engine.fillStyle = 'rgba(0, 0, 0, 0.7)';
       engine.font = '16px PT Mono';
       engine.textBaseline = 'hanging';
-      if (firstTextLine) {
-        engine.fillText(firstTextLine, 315, 115);
+
+      lineCollection.forEach(function(item, i) {
+        engine.fillText(item, 325, 125 + 25 * i);
       }
-      if (secondTextLine) {
-        engine.fillText(secondTextLine, 315, 135);
-      }
-      if (thirdTextLine) {
-        engine.fillText(thirdTextLine, 315, 155);
-      }
-      if (fourthTextLine) {
-        engine.fillText(fourthTextLine, 315, 175);
-      }
+     );
     },
 
     _drawPauseScreen: function() {
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          this.screenRender('Вы сделали правильное', 'действие, вы победили!');
+          this.screenRender(['Вы сделали правильное', 'действие, вы победили!']);
           break;
         case Verdict.FAIL:
-          this.screenRender('Вы проиграли!:(');
+          this.screenRender(['Вы проиграли!:(']);
           break;
         case Verdict.PAUSE:
-          this.screenRender('Вы приостановили игру,', 'нажмите <пробел>, чтобы', 'продолжить.');
+          this.screenRender(['Вы приостановили игру,', 'нажмите <пробел>, чтобы', 'продолжить.']);
           break;
         case Verdict.INTRO:
-          this.screenRender('Приветствую в игре', 'Code and Magic.', 'Нажмите <пробел> и начните.', 'играть уже сейчас!');
+          this.screenRender(['Приветствую в игре', 'Code and Magic.', 'Нажмите <пробел> и начните.', 'играть уже сейчас!']);
           break;
       }
     },
