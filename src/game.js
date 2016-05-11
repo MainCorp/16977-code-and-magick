@@ -379,63 +379,42 @@
      */
 
     _drawPauseScreen: function() {
-      var fontScreen = '16px PT Mono';
-      var wordArrayWIN = ['Вы сделали правильное', 'действие, вы победили!'];
-      var wordArrayFALSE = ['Вы проиграли!:('];
-      var wordArrayPAUSE = ['Вы приостановили игру,', 'нажмите <пробел>, чтобы', 'продолжить.'];
-      var wordArrayINTRO = ['Приветствую в игре', 'Code and Magic.', 'Нажмите <пробел> и начните', 'играть уже сейчас!'];
+      var engine = this.ctx;
+      var screenRender = function(firstTextLine, secondTextLine, thirdTextLine, fourthTextLine) {
+        engine.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        engine.fillRect(315, 115, 300, 150);
+        engine.fillStyle = '#ffffff';
+        engine.fillRect(305, 105, 300, 150);
 
+        engine.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        engine.font = '16px PT Mono';
+        engine.textBaseline = 'hanging';
+        if (firstTextLine) {
+          engine.fillText(firstTextLine, 315, 115);
+        }
+        if (secondTextLine) {
+          engine.fillText(secondTextLine, 315, 135);
+        }
+        if (thirdTextLine) {
+          engine.fillText(thirdTextLine, 315, 155);
+        }
+        if (fourthTextLine) {
+          engine.fillText(fourthTextLine, 315, 175);
+        }
+      };
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = '#ffffff';
-          this.ctx.fillRect(305, 105, 300, 150);
-
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillText(wordArrayWIN[0], 315, 115);
-          this.ctx.fillText(wordArrayWIN[1], 315, 135);
+          screenRender('Вы сделали правильное', 'действие, вы победили!');
           break;
         case Verdict.FAIL:
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = '#ffffff';
-          this.ctx.fillRect(305, 105, 300, 150);
-
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillText(wordArrayFALSE[0], 315, 115);
+          screenRender('Вы проиграли!:(');
           break;
         case Verdict.PAUSE:
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = '#ffffff';
-          this.ctx.fillRect(305, 105, 300, 150);
-
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillText(wordArrayPAUSE[0], 315, 115);
-          this.ctx.fillText(wordArrayPAUSE[1], 315, 135);
-          this.ctx.fillText(wordArrayPAUSE[2], 315, 155);
+          screenRender('Вы приостановили игру,', 'нажмите <пробел>, чтобы', 'продолжить.');
           break;
         case Verdict.INTRO:
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fillRect(315, 115, 300, 150);
-          this.ctx.fillStyle = '#ffffff';
-          this.ctx.fillRect(305, 105, 300, 150);
-
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.font = fontScreen;
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillText(wordArrayINTRO[0], 315, 115);
-          this.ctx.fillText(wordArrayINTRO[1], 315, 135);
-          this.ctx.fillText(wordArrayINTRO[2], 315, 155);
-          this.ctx.fillText(wordArrayINTRO[3], 315, 175);
+          screenRender('Приветствую в игре', 'Code and Magic.', 'Нажмите <пробел> и начните.', 'играть уже сейчас!');
           break;
       }
     },
