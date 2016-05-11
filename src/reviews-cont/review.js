@@ -4,7 +4,7 @@ var templateElement = document.querySelector('template');
 var elementToClone = templateElement.content.querySelector('.review');
 var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
 
-var receiveReviewsElement = function(data, container) {
+var Review = function(data, container) {
   var element = elementToClone.cloneNode(true);
   element.querySelector('.review-text').textContent = data.description;
   var reviewRating = element.querySelector('.review-rating');
@@ -34,4 +34,4 @@ var receiveReviewsElement = function(data, container) {
   photoUser.src = data.author.picture;
 };
 
-module.exports = receiveReviewsElement;
+module.exports = Review;
