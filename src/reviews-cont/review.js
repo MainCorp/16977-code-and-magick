@@ -6,6 +6,7 @@ var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rat
 
 function Review(data, container) {
   this.data = data;
+
   this.elementReviews = function() {
     var element = elementToClone.cloneNode(true);
     element.querySelector('.review-text').textContent = data.description;
@@ -44,6 +45,7 @@ function Review(data, container) {
       evt.target.classList.add('review-quiz-answer-active');
     }
   };
+
   this.remove = function() {
     this.element.removeEventListener('click', this.onClickRQuizAnswer());
     this.element.parentNode.removeChild(this.element);

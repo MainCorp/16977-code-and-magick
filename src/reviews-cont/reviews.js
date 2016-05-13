@@ -37,8 +37,8 @@ var toShowButtonActive = function() {
 
 var renderReviews = function(reviewsData, page, replaced) {
   if (replaced) {
-    renderedReviews.forEach(function(reviewItem) {
-      reviewItem.remove();
+    renderedReviews.forEach(function(review) {
+      review.remove();
     });
     renderedReviews = [];
   }
