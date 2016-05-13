@@ -8,9 +8,9 @@ var previewNumber = galleryContainer.querySelector('.preview-number-current');
 var imgPrev = galleryContainer.querySelector('.overlay-gallery-control-left');
 var imgNext = galleryContainer.querySelector('.overlay-gallery-control-right');
 var btnCloseGallery = galleryContainer.querySelector('.overlay-gallery-close');
-var imgDisabledClassName = 'overlay-gallery-control--disabled';
 var photos = [];
 var lengthArrayPhotos = photos.length;
+imgPrev.classList.toggle('invisible', true);
 
 var KEY_CODE_ESC = 27;
 
@@ -45,8 +45,8 @@ function _showPrevImage() {
 function _changePhoto() {
   currentPhoto.src = photos[numberPhoto];
 
-  imgPrev.classList.toggle(imgDisabledClassName, numberPhoto === 0);
-  imgNext.classList.toggle(imgDisabledClassName, numberPhoto === lengthArrayPhotos - 1);
+  imgPrev.classList.toggle('invisible', numberPhoto === 0);
+  imgNext.classList.toggle('invisible', numberPhoto === lengthArrayPhotos - 1);
 
   previewNumber.textContent = numberPhoto + 1;
 }
@@ -69,7 +69,7 @@ function getPhotos() {
   lengthArrayPhotos = photos.length;
 
   totalPreviews.textContent = lengthArrayPhotos;
-  currentPhoto = galleryPreview.appendChild(new Image(480, 480));
+  currentPhoto = galleryPreview.appendChild(new Image());
 }
 
 function showGallery(idPhoto) {
