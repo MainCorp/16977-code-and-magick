@@ -1,6 +1,6 @@
 'use strict';
 
-var receiveReviewsElement = require('./review');
+var Review = require('./review');
 var getReviews = require('./get-reviews');
 var getActiveFilter = require('./filter/get-active-filter');
 
@@ -10,6 +10,7 @@ var elementFilterReviews = filterReviews['reviews'];
 var contentReviews = document.querySelector('.reviews');
 var reviews;
 var reviewsToFilter = [];
+var renderedReviews = [];
 var toShowButton = document.querySelector('.reviews-controls-more');
 
 
@@ -36,14 +37,17 @@ var toShowButtonActive = function() {
 
 var renderReviews = function(reviewsData, page, replaced) {
   if (replaced) {
-    reviewsContainer.innerHTML = '';
+    renderedReviews.forEach(function(reviewItem) {
+      reviewItem.remove();
+    });
+    renderedReviews = [];
   }
 
   var from = page * PAGE_SIZE;
   var to = from + PAGE_SIZE;
 
   reviewsData.slice(from, to).forEach(function(review) {
-    receiveReviewsElement(review, reviewsContainer);
+    renderedReviews.push(new Review(review, reviewsContainer));
   });
 
   if (to >= reviewsToFilter.length) {
