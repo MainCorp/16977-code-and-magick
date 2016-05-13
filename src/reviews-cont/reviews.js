@@ -1,8 +1,7 @@
 'use strict';
 
-var receiveReviewsElement = require('./receive-reviews-element');
+var receiveReviewsElement = require('./review');
 var getReviews = require('./get-reviews');
-var Filter = require('./filter/filter-type');
 var getActiveFilter = require('./filter/get-active-filter');
 
 var reviewsContainer = document.querySelector('.reviews-list');
@@ -17,6 +16,14 @@ var toShowButton = document.querySelector('.reviews-controls-more');
 var PAGE_SIZE = 3;
 
 var pageNumber;
+
+var Filter = {
+  'ALL': 'reviews-all',
+  'RECENT': 'reviews-recent',
+  'GOOD': 'reviews-good',
+  'BAD': 'reviews-bad',
+  'POPULAR': 'reviews-popular'
+};
 
 filterReviews.classList.add('invisible');
 

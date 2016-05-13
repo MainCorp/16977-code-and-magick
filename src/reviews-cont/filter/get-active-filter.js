@@ -1,6 +1,12 @@
 'use strict';
 
-var Filter = require('./filter-type');
+var Filter = {
+  'ALL': 'reviews-all',
+  'RECENT': 'reviews-recent',
+  'GOOD': 'reviews-good',
+  'BAD': 'reviews-bad',
+  'POPULAR': 'reviews-popular'
+};
 
 var getActiveFilter = function(reviews, valueReview) {
   var reviewsToFilter = reviews.slice(0);
