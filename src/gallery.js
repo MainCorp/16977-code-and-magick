@@ -65,6 +65,7 @@ function getPhotos() {
   for (var i = 0; i < imgCollection.length; i++) {
     photos.push(imgCollection[i].getAttribute('src'));
     imgCollection[i].dataset.id = i;
+    console.log(imgCollection[i].dataset.id);
   }
   lengthArrayPhotos = photos.length;
 
@@ -83,6 +84,8 @@ function showGallery(idPhoto) {
   btnCloseGallery.addEventListener('click', _onCloseClick);
 
   window.addEventListener('keydown', _onDocumentKeyDown);
+
+  _changePhoto();
 }
 
 
