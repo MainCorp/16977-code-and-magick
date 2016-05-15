@@ -61,11 +61,17 @@ function _hideGallery() {
   window.removeEventListener('keydown', _onDocumentKeyDown);
 }
 
+function returnSerialNumber(param) {
+  for(var i; i < photos.length; i++) {
+    if(photos[i] === param) {
+      return i;
+    }
+  }
+}
+
 function getPhotos() {
   for (var i = 0; i < imgCollection.length; i++) {
     photos.push(imgCollection[i].getAttribute('src'));
-    imgCollection[i].dataset.id = i;
-    console.log(imgCollection[i].dataset.id);
   }
   lengthArrayPhotos = photos.length;
 
@@ -88,6 +94,6 @@ function showGallery(idPhoto) {
   _changePhoto();
 }
 
-
+module.exports.returnSerialNumber = returnSerialNumber;
 module.exports.getPhotos = getPhotos;
 module.exports.showGallery = showGallery;

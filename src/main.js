@@ -10,7 +10,8 @@ gallery.getPhotos();
 photoGallery.addEventListener('click', function(evt) {
   evt.preventDefault();
   if (evt.target.tagName === 'IMG') {
-    idPhoto = parseInt(evt.target.dataset.id, 10);
+    idPhoto = gallery.returnSerialNumber(photos.src);
     gallery.showGallery(idPhoto);
   }
+  console.log(returnSerialNumber(photos.src));
 });
