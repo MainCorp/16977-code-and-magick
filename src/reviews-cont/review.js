@@ -35,6 +35,7 @@ function Review(data, container) {
     };
 
     photoUser.src = data.author.picture;
+    return element;
   };
 
   this.element = this.elementReviews();
