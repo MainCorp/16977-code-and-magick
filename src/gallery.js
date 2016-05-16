@@ -71,7 +71,6 @@ function getActivePhoto(param) {
 getPhotos(imgCollection);
 function getPhotos(pct) {
   for (var i = 0; i < pct.length; i++) {
-    photos.push(imgCollection[i].getAttribute('src'));
     photos[i] = pct[i].src;
   }
   lengthArrayPhotos = photos.length;
