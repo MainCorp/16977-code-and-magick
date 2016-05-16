@@ -11,7 +11,6 @@ var btnCloseGallery = galleryContainer.querySelector('.overlay-gallery-close');
 var photoGallery = document.querySelector('.photogallery');
 var photos = [];
 var lengthArrayPhotos = photos.length;
-var clickedElement;
 imgPrev.classList.toggle('invisible', true);
 
 var KEY_CODE_ESC = 27;
@@ -101,8 +100,7 @@ function showGallery() {
 photoGallery.addEventListener('click', function(evt) {
   evt.preventDefault();
   if (evt.target.tagName === 'IMG') {
-    clickedElement = evt.target.src;
-    numberPhoto = getActivePhoto(clickedElement);
+    numberPhoto = getActivePhoto(evt.target.src);
     showGallery(numberPhoto);
   }
 });
