@@ -100,9 +100,11 @@ function showGallery() {
 
 photoGallery.addEventListener('click', function(evt) {
   evt.preventDefault();
-  clickedElement = evt.target.src;
-  numberPhoto = getActivePhoto(clickedElement);
-  showGallery(numberPhoto);
+  if (evt.target.tagName === 'IMG') {
+    clickedElement = evt.target.src;
+    numberPhoto = getActivePhoto(clickedElement);
+    showGallery(numberPhoto);
+  }
 });
 
 module.exports.showGallery = showGallery;
