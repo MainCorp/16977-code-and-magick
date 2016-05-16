@@ -54,9 +54,6 @@ function _changePhoto() {
 
 function _hideGallery() {
   galleryContainer.classList.add('invisible');
-
-  imgPrev.removeEventListener('click', _showPrevImage);
-  imgNext.removeEventListener('click', _showNextImage);
   btnCloseGallery.removeEventListener('click', _onCloseClick);
 
   window.removeEventListener('keydown', _onDocumentKeyDown);
@@ -84,8 +81,6 @@ function getPhotos(pct) {
 }
 
 function showGallery() {
-  currentPhoto.src = photos[numberPhoto];
-  previewNumber.textContent = numberPhoto + 1;
   galleryContainer.classList.remove('invisible');
 
   imgPrev.addEventListener('click', _showPrevImage);
@@ -101,7 +96,7 @@ photoGallery.addEventListener('click', function(evt) {
   evt.preventDefault();
   if (evt.target.tagName === 'IMG') {
     numberPhoto = getActivePhoto(evt.target.src);
-    showGallery(numberPhoto);
+    showGallery();
   }
 });
 
