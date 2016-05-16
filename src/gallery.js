@@ -8,8 +8,10 @@ var previewNumber = galleryContainer.querySelector('.preview-number-current');
 var imgPrev = galleryContainer.querySelector('.overlay-gallery-control-left');
 var imgNext = galleryContainer.querySelector('.overlay-gallery-control-right');
 var btnCloseGallery = galleryContainer.querySelector('.overlay-gallery-close');
+var photoGallery = document.querySelector('.photogallery');
 var photos = [];
 var lengthArrayPhotos = photos.length;
+var clickedElement;
 imgPrev.classList.toggle('invisible', true);
 
 var KEY_CODE_ESC = 27;
@@ -61,17 +63,20 @@ function _hideGallery() {
   window.removeEventListener('keydown', _onDocumentKeyDown);
 }
 
-function returnSerialNumber(param) {
-  for(var i; i < photos.length; i++) {
+function getActivePhoto(param) {
+  for (var i = 0; i < photos.length; i++) {
     if(photos[i] === param) {
-      return i;
+      break;
     }
   }
+  return i;
 }
 
-function getPhotos() {
-  for (var i = 0; i < imgCollection.length; i++) {
+getPhotos(imgCollection);
+function getPhotos(pct) {
+  for (var i = 0; i < pct.length; i++) {
     photos.push(imgCollection[i].getAttribute('src'));
+    photos[i] = pct[i].src;
   }
   lengthArrayPhotos = photos.length;
 
@@ -79,8 +84,7 @@ function getPhotos() {
   currentPhoto = galleryPreview.appendChild(new Image());
 }
 
-function showGallery(idPhoto) {
-  numberPhoto = idPhoto;
+function showGallery() {
   currentPhoto.src = photos[numberPhoto];
   previewNumber.textContent = numberPhoto + 1;
   galleryContainer.classList.remove('invisible');
@@ -94,6 +98,11 @@ function showGallery(idPhoto) {
   _changePhoto();
 }
 
-module.exports.returnSerialNumber = returnSerialNumber;
-module.exports.getPhotos = getPhotos;
+photoGallery.addEventListener('click', function(evt) {
+  evt.preventDefault();
+  clickedElement = evt.target.src;
+  numberPhoto = getActivePhoto(clickedElement);
+  showGallery(numberPhoto);
+});
+
 module.exports.showGallery = showGallery;
