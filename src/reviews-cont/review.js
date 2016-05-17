@@ -6,19 +6,20 @@ var reviewRatingClass = ['review-rating-two', 'review-rating-three', 'review-rat
 
 function Review(data, container) {
   this.data = data;
+  this.container = container;
+  this.element = elementToClone.cloneNode(true);
 
-  this.elementReviews = function() {
-    var element = elementToClone.cloneNode(true);
-    element.querySelector('.review-text').textContent = data.description;
-    var reviewRating = element.querySelector('.review-rating');
+  this.createReview = function() {
+    this.element.querySelector('.review-text').textContent = data.description;
+    var reviewRating = this.element.querySelector('.review-rating');
     reviewRating.style.display = 'block';
 
     reviewRating.classList.add(reviewRatingClass[data.rating - 2]);
 
-    container.appendChild(element);
+    container.appendChild(this.element);
 
     var photoUser = new Image();
-    var reviewAuthor = element.querySelector('.review-author');
+    var reviewAuthor = this.element.querySelector('.review-author');
 
     photoUser.onload = function() {
       photoUser.classList.add('review-author');
@@ -27,19 +28,19 @@ function Review(data, container) {
       photoUser.alt = 'Аватарка пользователя ' + data.author.name;
       photoUser.title = data.author.name;
 
-      element.replaceChild(photoUser, reviewAuthor);
+      this.element.replaceChild(photoUser, reviewAuthor);
     };
 
     photoUser.onerror = function() {
-      element.classList.add('review-load-failure');
+      this.element.classList.add('review-load-failure');
     };
 
     photoUser.src = data.author.picture;
-    return element;
+    return this.element;
   };
 
-  this.element = this.elementReviews();
-  this.element.addEventListener('click', this.onClickRQuizAnswer);
+  this.element = this.createReview();
+
   this.onClickRQuizAnswer = function(evt) {
     if (evt.target.classList.contains('review-quiz-answer')) {
       evt.preventDefault();
@@ -49,8 +50,10 @@ function Review(data, container) {
 
   this.remove = function() {
     this.element.removeEventListener('click', this.onClickRQuizAnswer());
-    this.element.parentNode.removeChild(this.element);
+    container.removeChild(this.element);
   };
+
+  this.element.addEventListener('click', this.onClickRQuizAnswer);
 }
 
 module.exports = Review;
