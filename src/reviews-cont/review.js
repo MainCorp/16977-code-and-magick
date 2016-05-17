@@ -49,14 +49,14 @@ function Review(data, container) {
     }
   };
 
-  this.remove = function() {
-    this.element.removeEventListener('click', this.onClickRQuizAnswer());
-    container.removeChild(this.element);
-  };
-
   this.element.addEventListener('click', function(evt) {
     that.onClickRQuizAnswer(evt);
   });
+
+  this.remove = function() {
+    that.element.removeEventListener('click', that.onClickRQuizAnswer());
+    container.removeChild(that.element);
+  };
 }
 
 module.exports = Review;
