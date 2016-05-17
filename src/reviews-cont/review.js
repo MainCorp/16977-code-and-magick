@@ -8,6 +8,7 @@ function Review(data, container) {
   this.data = data;
   this.container = container;
   this.element = elementToClone.cloneNode(true);
+  var that = this;
 
   this.createReview = function() {
     this.element.querySelector('.review-text').textContent = data.description;
@@ -53,7 +54,9 @@ function Review(data, container) {
     container.removeChild(this.element);
   };
 
-  this.element.addEventListener('click', this.onClickRQuizAnswer);
+  this.element.addEventListener('click', function(evt) {
+    that.onClickRQuizAnswer(evt);
+  });
 }
 
 module.exports = Review;
