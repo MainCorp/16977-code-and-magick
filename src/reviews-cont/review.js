@@ -29,7 +29,7 @@ function Review(data, container) {
       photoUser.alt = 'Аватарка пользователя ' + data.author.name;
       photoUser.title = data.author.name;
 
-      this.element.replaceChild(photoUser, reviewAuthor);
+      that.element.replaceChild(photoUser, reviewAuthor);
     };
 
     photoUser.onerror = function() {
