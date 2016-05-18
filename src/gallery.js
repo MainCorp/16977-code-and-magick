@@ -57,9 +57,10 @@ function Gallery() {
 
   this._hideGallery = function() {
     that.galleryContainer.classList.add('invisible');
-    that.btnCloseGallery.removeEventListener('click', that._onCloseClick);
 
-    window.removeEventListener('keydown', that._onDocumentKeyDown);
+    window.removeEventListener('keydown', function(evt) {
+      that._onDocumentKeyDown(evt);
+    });
   };
 
   this.getActivePhoto = function(param) {
@@ -85,11 +86,19 @@ function Gallery() {
   this.showGallery = function() {
     that.galleryContainer.classList.remove('invisible');
 
-    that.imgPrev.addEventListener('click', that._showPrevImage);
-    that.imgNext.addEventListener('click', that._showNextImage);
-    that.btnCloseGallery.addEventListener('click', that._onCloseClick);
+    that.imgPrev.addEventListener('click', function() {
+      that._showPrevImage();
+    });
+    that.imgNext.addEventListener('click', function() {
+      that._showNextImage();
+    });
+    that.btnCloseGallery.addEventListener('click', function() {
+      that._onCloseClick();
+    });
 
-    window.addEventListener('keydown', that._onDocumentKeyDown);
+    window.removeEventListener('keydown', function(evt) {
+      that._onDocumentKeyDown(evt);
+    });
 
     that._changePhoto();
   };
