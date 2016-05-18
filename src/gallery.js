@@ -1,23 +1,23 @@
 'use strict';
 
 function Gallery() {
-  var galleryContainer = document.querySelector('.overlay-gallery');
-  var galleryPreview = document.querySelector('.overlay-gallery-preview');
-  var totalPreviews = galleryContainer.querySelector('.preview-number-total');
-  var imgCollection = document.querySelectorAll('.photogallery-image > img');
-  var previewNumber = galleryContainer.querySelector('.preview-number-current');
-  var imgPrev = galleryContainer.querySelector('.overlay-gallery-control-left');
-  var imgNext = galleryContainer.querySelector('.overlay-gallery-control-right');
-  var btnCloseGallery = galleryContainer.querySelector('.overlay-gallery-close');
-  var photoGallery = document.querySelector('.photogallery');
-  var photos = [];
-  var lengthArrayPhotos = photos.length;
-  imgPrev.classList.toggle('invisible', true);
+  this.galleryContainer = document.querySelector('.overlay-gallery');
+  this.galleryPreview = document.querySelector('.overlay-gallery-preview');
+  this.totalPreviews = this.galleryContainer.querySelector('.preview-number-total');
+  this.imgCollection = document.querySelectorAll('.photogallery-image > img');
+  this.previewNumber = this.galleryContainer.querySelector('.preview-number-current');
+  this.imgPrev = this.galleryContainer.querySelector('.overlay-gallery-control-left');
+  this.imgNext = this.galleryContainer.querySelector('.overlay-gallery-control-right');
+  this.btnCloseGallery = this.galleryContainer.querySelector('.overlay-gallery-close');
+  this.photoGallery = document.querySelector('.photogallery');
+  this.photos = [];
+  this.lengthArrayPhotos = this.photos.length;
+  this.imgPrev.classList.toggle('invisible', true);
 
-  var KEY_CODE_ESC = 27;
+  this.KEY_CODE_ESC = 27;
 
-  var currentPhoto;
-  var numberPhoto;
+  this.currentPhoto = 0;
+  this.numberPhoto = 0;
 
   var that = this;
 
@@ -27,44 +27,44 @@ function Gallery() {
   };
 
   this._onDocumentKeyDown = function(evt) {
-    if (evt.keyCode === KEY_CODE_ESC) {
+    if (evt.keyCode === that.KEY_CODE_ESC) {
       that._hideGallery();
     }
   };
 
   this._showNextImage = function() {
-    if (numberPhoto < lengthArrayPhotos - 1) {
+    if (that.numberPhoto < that.lengthArrayPhotos - 1) {
 
-      that._changePhoto(numberPhoto++ );
+      that._changePhoto(that.numberPhoto++ );
     }
   };
 
   this._showPrevImage = function() {
-    if (numberPhoto > 0) {
+    if (that.numberPhoto > 0) {
 
-      that._changePhoto(numberPhoto-- );
+      that._changePhoto(that.numberPhoto-- );
     }
   };
 
   this._changePhoto = function() {
-    currentPhoto.src = photos[numberPhoto];
+    that.currentPhoto.src = that.photos[that.numberPhoto];
 
-    imgPrev.classList.toggle('invisible', numberPhoto === 0);
-    imgNext.classList.toggle('invisible', numberPhoto === lengthArrayPhotos - 1);
+    that.imgPrev.classList.toggle('invisible', that.numberPhoto === 0);
+    that.imgNext.classList.toggle('invisible', that.numberPhoto === that.lengthArrayPhotos - 1);
 
-    previewNumber.textContent = numberPhoto + 1;
+    that.previewNumber.textContent = that.numberPhoto + 1;
   };
 
   this._hideGallery = function() {
-    galleryContainer.classList.add('invisible');
-    btnCloseGallery.removeEventListener('click', that._onCloseClick);
+    that.galleryContainer.classList.add('invisible');
+    that.btnCloseGallery.removeEventListener('click', that._onCloseClick);
 
     window.removeEventListener('keydown', that._onDocumentKeyDown);
   };
 
   this.getActivePhoto = function(param) {
-    for (var i = 0; i < photos.length; i++) {
-      if(photos[i] === param) {
+    for (var i = 0; i < that.photos.length; i++) {
+      if(that.photos[i] === param) {
         break;
       }
     }
@@ -73,31 +73,31 @@ function Gallery() {
 
   this.getPhotos = function(pct) {
     for (var i = 0; i < pct.length; i++) {
-      photos[i] = pct[i].src;
+      that.photos[i] = pct[i].src;
     }
-    lengthArrayPhotos = photos.length;
+    that.lengthArrayPhotos = that.photos.length;
 
-    totalPreviews.textContent = lengthArrayPhotos;
-    currentPhoto = galleryPreview.appendChild(new Image());
+    that.totalPreviews.textContent = that.lengthArrayPhotos;
+    that.currentPhoto = this.galleryPreview.appendChild(new Image());
   };
-  this.getPhotos(imgCollection);
+  this.getPhotos(this.imgCollection);
 
   this.showGallery = function() {
-    galleryContainer.classList.remove('invisible');
+    that.galleryContainer.classList.remove('invisible');
 
-    imgPrev.addEventListener('click', that._showPrevImage);
-    imgNext.addEventListener('click', that._showNextImage);
-    btnCloseGallery.addEventListener('click', that._onCloseClick);
+    that.imgPrev.addEventListener('click', that._showPrevImage);
+    that.imgNext.addEventListener('click', that._showNextImage);
+    that.btnCloseGallery.addEventListener('click', that._onCloseClick);
 
     window.addEventListener('keydown', that._onDocumentKeyDown);
 
     that._changePhoto();
   };
 
-  photoGallery.addEventListener('click', function(evt) {
+  this.photoGallery.addEventListener('click', function(evt) {
     evt.preventDefault();
     if (evt.target.tagName === 'IMG') {
-      numberPhoto = that.getActivePhoto(evt.target.src);
+      that.numberPhoto = that.getActivePhoto(evt.target.src);
       that.showGallery();
     }
   });
