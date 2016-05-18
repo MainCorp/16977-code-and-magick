@@ -58,9 +58,7 @@ function Gallery() {
   this._hideGallery = function() {
     that.galleryContainer.classList.add('invisible');
 
-    window.removeEventListener('keydown', function(evt) {
-      that._onDocumentKeyDown(evt);
-    });
+    window.removeEventListener('keydown', null);
   };
 
   this.getActivePhoto = function(param) {
@@ -96,7 +94,9 @@ function Gallery() {
       that._onCloseClick();
     });
 
-    window.removeEventListener('keydown', null);
+    window.addEventListener('keydown', function(evt) {
+      that._onDocumentKeyDown(evt);
+    });
 
     that._changePhoto();
   };
