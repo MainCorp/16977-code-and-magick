@@ -96,7 +96,7 @@ function Gallery() {
       that._onCloseClick();
     });
 
-    window.removeEventListener('keydown', function(evt) {
+    window.addEventListener('keydown', function(evt) {
       that._onDocumentKeyDown(evt);
     });
 
