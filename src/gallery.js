@@ -96,9 +96,7 @@ function Gallery() {
       that._onCloseClick();
     });
 
-    window.addEventListener('keydown', function(evt) {
-      that._onDocumentKeyDown(evt);
-    });
+    window.removeEventListener('keydown', null);
 
     that._changePhoto();
   };
