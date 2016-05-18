@@ -33,7 +33,7 @@ function Review(data, container) {
     };
 
     photoUser.onerror = function() {
-      this.element.classList.add('review-load-failure');
+      that.element.classList.add('review-load-failure');
     };
 
     photoUser.src = data.author.picture;
@@ -54,8 +54,7 @@ function Review(data, container) {
   });
 
   this.remove = function() {
-    that.element.removeEventListener('click', that.onClickRQuizAnswer());
-    container.removeChild(that.element);
+    that.element.removeEventListener('click', container.removeChild(that.element));
   };
 }
 
