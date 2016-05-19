@@ -23,47 +23,47 @@ function Gallery() {
 
 
   this._onCloseClick = function() {
-    that._hideGallery();
+    this._hideGallery();
   };
 
   this._onDocumentKeyDown = function(evt) {
-    if (evt.keyCode === that.KEY_CODE_ESC) {
-      that._hideGallery();
+    if (evt.keyCode === this.KEY_CODE_ESC) {
+      this._hideGallery();
     }
   };
 
   this._showNextImage = function() {
-    if (that.numberPhoto < that.lengthArrayPhotos - 1) {
+    if (this.numberPhoto < this.lengthArrayPhotos - 1) {
 
-      that._changePhoto(that.numberPhoto++ );
+      this._changePhoto(this.numberPhoto++ );
     }
   };
 
   this._showPrevImage = function() {
-    if (that.numberPhoto > 0) {
+    if (this.numberPhoto > 0) {
 
-      that._changePhoto(that.numberPhoto-- );
+      this._changePhoto(this.numberPhoto-- );
     }
   };
 
   this._changePhoto = function() {
-    that.currentPhoto.src = that.photos[that.numberPhoto];
+    this.currentPhoto.src = this.photos[this.numberPhoto];
 
-    that.imgPrev.classList.toggle('invisible', that.numberPhoto === 0);
-    that.imgNext.classList.toggle('invisible', that.numberPhoto === that.lengthArrayPhotos - 1);
+    this.imgPrev.classList.toggle('invisible', this.numberPhoto === 0);
+    this.imgNext.classList.toggle('invisible', this.numberPhoto === this.lengthArrayPhotos - 1);
 
-    that.previewNumber.textContent = that.numberPhoto + 1;
+    this.previewNumber.textContent = this.numberPhoto + 1;
   };
 
   this._hideGallery = function() {
-    that.galleryContainer.classList.add('invisible');
+    this.galleryContainer.classList.add('invisible');
 
     window.removeEventListener('keydown', null);
   };
 
   this.getActivePhoto = function(param) {
-    for (var i = 0; i < that.photos.length; i++) {
-      if(that.photos[i] === param) {
+    for (var i = 0; i < this.photos.length; i++) {
+      if(this.photos[i] === param) {
         break;
       }
     }
@@ -72,23 +72,23 @@ function Gallery() {
 
   this.getPhotos = function(pct) {
     for (var i = 0; i < pct.length; i++) {
-      that.photos[i] = pct[i].src;
+      this.photos[i] = pct[i].src;
     }
-    that.lengthArrayPhotos = that.photos.length;
+    this.lengthArrayPhotos = this.photos.length;
 
-    that.totalPreviews.textContent = that.lengthArrayPhotos;
-    that.currentPhoto = this.galleryPreview.appendChild(new Image());
+    this.totalPreviews.textContent = this.lengthArrayPhotos;
+    this.currentPhoto = this.galleryPreview.appendChild(new Image());
   };
   this.getPhotos(this.imgCollection);
 
   this.showGallery = function() {
-    that.galleryContainer.classList.remove('invisible');
+    this.galleryContainer.classList.remove('invisible');
 
     window.addEventListener('keydown', function(evt) {
       that._onDocumentKeyDown(evt);
     });
 
-    that._changePhoto();
+    this._changePhoto();
   };
 
   this.photoGallery.addEventListener('click', function(evt) {
