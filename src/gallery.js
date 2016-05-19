@@ -84,16 +84,6 @@ function Gallery() {
   this.showGallery = function() {
     that.galleryContainer.classList.remove('invisible');
 
-    that.imgPrev.addEventListener('click', function() {
-      that._showPrevImage();
-    });
-    that.imgNext.addEventListener('click', function() {
-      that._showNextImage();
-    });
-    that.btnCloseGallery.addEventListener('click', function() {
-      that._onCloseClick();
-    });
-
     window.addEventListener('keydown', function(evt) {
       that._onDocumentKeyDown(evt);
     });
@@ -107,6 +97,16 @@ function Gallery() {
       that.numberPhoto = that.getActivePhoto(evt.target.src);
       that.showGallery();
     }
+  });
+
+  this.imgPrev.addEventListener('click', function() {
+    that._showPrevImage();
+  });
+  this.imgNext.addEventListener('click', function() {
+    that._showNextImage();
+  });
+  this.btnCloseGallery.addEventListener('click', function() {
+    that._onCloseClick();
   });
 }
 
