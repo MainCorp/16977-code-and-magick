@@ -12,6 +12,7 @@ var reviews;
 var reviewsToFilter = [];
 var renderedReviews = [];
 var toShowButton = document.querySelector('.reviews-controls-more');
+var localFilter = 'id';
 
 
 var PAGE_SIZE = 3;
@@ -25,6 +26,8 @@ var Filter = {
   'BAD': 'reviews-bad',
   'POPULAR': 'reviews-popular'
 };
+
+var defaultFilter = Filter.ALL;
 
 filterReviews.classList.add('invisible');
 
@@ -61,17 +64,20 @@ filterReviews.addEventListener('change', function() {
   }
 });
 
-var addActiveFilter = function(valueReview) {
-  reviewsToFilter = getActiveFilter(reviews, valueReview);
+var addActiveFilter = function(id) {
+  reviewsToFilter = getActiveFilter(reviews, id);
   pageNumber = 0;
   toShowButton.classList.remove('invisible');
+  localStorage.setItem(localFilter, id);
 
   renderReviews(reviewsToFilter, pageNumber, true);
 };
 
 getReviews(function(loadedReviews) {
   reviews = loadedReviews;
-  addActiveFilter(Filter.ALL);
+  defaultFilter = localStorage.getItem(localFilter);
+  filterReviews.elements['reviews'].value = defaultFilter;
+  addActiveFilter(defaultFilter);
   toShowButtonActive();
   contentReviews.classList.remove('.reviews-list-loading');
 });

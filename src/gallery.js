@@ -1,105 +1,113 @@
 'use strict';
 
 function Gallery() {
+  this.galleryContainer = document.querySelector('.overlay-gallery');
+  this.galleryPreview = document.querySelector('.overlay-gallery-preview');
+  this.totalPreviews = this.galleryContainer.querySelector('.preview-number-total');
+  this.imgCollection = document.querySelectorAll('.photogallery-image > img');
+  this.previewNumber = this.galleryContainer.querySelector('.preview-number-current');
+  this.imgPrev = this.galleryContainer.querySelector('.overlay-gallery-control-left');
+  this.imgNext = this.galleryContainer.querySelector('.overlay-gallery-control-right');
+  this.btnCloseGallery = this.galleryContainer.querySelector('.overlay-gallery-close');
+  this.photoGallery = document.querySelector('.photogallery');
+  this.photos = [];
+  this.lengthArrayPhotos = this.photos.length;
+  this.imgPrev.classList.toggle('invisible', true);
 
-  var galleryContainer = document.querySelector('.overlay-gallery');
-  var galleryPreview = document.querySelector('.overlay-gallery-preview');
-  var totalPreviews = galleryContainer.querySelector('.preview-number-total');
-  var imgCollection = document.querySelectorAll('.photogallery-image > img');
-  var previewNumber = galleryContainer.querySelector('.preview-number-current');
-  var imgPrev = galleryContainer.querySelector('.overlay-gallery-control-left');
-  var imgNext = galleryContainer.querySelector('.overlay-gallery-control-right');
-  var photogallery = document.querySelector('.photogallery');
-  var btnCloseGallery = galleryContainer.querySelector('.overlay-gallery-close');
-  var photos = [];
-  var lengthArrayPhotos = photos.length;
+  this.KEY_CODE_ESC = 27;
 
-  var KEY_CODE_ESC = 27;
+  this.currentPhoto = 0;
+  this.numberPhoto = 0;
 
   var that = this;
-  this.photos = [];
 
-  this.getPhotos = function() {
-    that.photos = Array.prototype.map.call(imgCollection, function(image, i) {
-      image.dataset.id = i;
-      return image.getAttribute('src');
-    });
 
-    lengthArrayPhotos = that.photos.length;
-
-    totalPreviews.textContent = lengthArrayPhotos;
-    that.currentPhoto = galleryPreview.appendChild(new Image());
+  this._onCloseClick = function() {
+    this._hideGallery();
   };
 
-  this.showGallery = function(idPhoto) {
-    that.numberPhoto = idPhoto;
-    that.currentPhoto.src = that.photos[that.numberPhoto];
-    previewNumber.textContent = that.numberPhoto + 1;
-    galleryContainer.classList.remove('invisible');
-
-    imgPrev.addEventListener('click', that.showPrevImage);
-    imgNext.addEventListener('click', that.showNextImage);
-    btnCloseGallery.addEventListener('click', that.onCloseClick);
-
-    window.addEventListener('keydown', that.onDocumentKeyDown);
-
-    this.changePhoto();
-  };
-
-  this.showPrevImage = function() {
-    if (that.numberPhoto > 0) {
-
-      that.changePhoto(that.numberPhoto-- );
+  this._onDocumentKeyDown = function(evt) {
+    if (evt.keyCode === this.KEY_CODE_ESC) {
+      this._hideGallery();
     }
   };
 
-  this.showNextImage = function() {
-    if (that.numberPhoto < lengthArrayPhotos - 1) {
+  this._showNextImage = function() {
+    if (this.numberPhoto < this.lengthArrayPhotos - 1) {
 
-      that.changePhoto(that.numberPhoto++ );
+      this._changePhoto(this.numberPhoto++ );
     }
   };
 
-  this.hideGallery = function() {
-    galleryContainer.classList.add('invisible');
+  this._showPrevImage = function() {
+    if (this.numberPhoto > 0) {
 
-    imgPrev.removeEventListener('click', that.showPrevImage);
-    imgNext.removeEventListener('click', that.showNextImage);
-    btnCloseGallery.removeEventListener('click', that.onCloseClick);
-
-    window.removeEventListener('keydown', that.onDocumentKeyDown);
-  };
-
-  this.onCloseClick = function() {
-    that.hideGallery();
-  };
-
-  this.onDocumentKeyDown = function(evt) {
-    if (evt.keyCode === KEY_CODE_ESC) {
-      that.hideGallery();
+      this._changePhoto(this.numberPhoto-- );
     }
   };
 
-  this.changePhoto = function() {
-    that.currentPhoto.src = that.photos[that.numberPhoto];
-    previewNumber.textContent = that.numberPhoto + 1;
+  this._changePhoto = function() {
+    this.currentPhoto.src = this.photos[this.numberPhoto];
 
-    imgPrev.classList.toggle('invisible', that.numberPhoto === 0);
-    imgNext.classList.toggle('invisible', that.numberPhoto === lengthArrayPhotos - 1);
+    this.imgPrev.classList.toggle('invisible', this.numberPhoto === 0);
+    this.imgNext.classList.toggle('invisible', this.numberPhoto === this.lengthArrayPhotos - 1);
+
+    this.previewNumber.textContent = this.numberPhoto + 1;
   };
 
-  this.addClickHandler = function() {
-    photogallery.addEventListener('click', function(evt) {
-      if (evt.target.dataset.id) {
-        evt.preventDefault();
-        that.showGallery(parseInt(evt.target.dataset.id, 10));
+  this._hideGallery = function() {
+    this.galleryContainer.classList.add('invisible');
+
+    window.removeEventListener('keydown', null);
+  };
+
+  this.getActivePhoto = function(param) {
+    for (var i = 0; i < this.photos.length; i++) {
+      if(this.photos[i] === param) {
+        break;
       }
-    });
+    }
+    return i;
   };
 
+  this.getPhotos = function(pct) {
+    for (var i = 0; i < pct.length; i++) {
+      this.photos[i] = pct[i].src;
+    }
+    this.lengthArrayPhotos = this.photos.length;
 
-  this.getPhotos();
+    this.totalPreviews.textContent = this.lengthArrayPhotos;
+    this.currentPhoto = this.galleryPreview.appendChild(new Image());
+  };
+  this.getPhotos(this.imgCollection);
 
+  this.showGallery = function() {
+    this.galleryContainer.classList.remove('invisible');
+
+    window.addEventListener('keydown', function(evt) {
+      that._onDocumentKeyDown(evt);
+    });
+
+    this._changePhoto();
+  };
+
+  this.photoGallery.addEventListener('click', function(evt) {
+    evt.preventDefault();
+    if (evt.target.tagName === 'IMG') {
+      that.numberPhoto = that.getActivePhoto(evt.target.src);
+      that.showGallery();
+    }
+  });
+
+  this.imgPrev.addEventListener('click', function() {
+    that._showPrevImage();
+  });
+  this.imgNext.addEventListener('click', function() {
+    that._showNextImage();
+  });
+  this.btnCloseGallery.addEventListener('click', function() {
+    that._onCloseClick();
+  });
 }
 
 module.exports = new Gallery();
