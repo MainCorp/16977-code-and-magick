@@ -1,3 +1,4 @@
 require('./form');
 require('./game');
-require('./reviews');
+require('./reviews-cont/reviews');
+require('./gallery');
