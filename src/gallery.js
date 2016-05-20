@@ -26,35 +26,30 @@ function Gallery() {
     return '#photo/' + url;
   };
 
-
   this._onCloseClick = function() {
-    this._hideGallery();
+    that._hideGallery();
   };
 
   this._onDocumentKeyDown = function(evt) {
     if (evt.keyCode === this.KEY_CODE_ESC) {
-      this._hideGallery();
+      that._hideGallery();
     }
   };
 
   this._showNextImage = function() {
     if (this.numberPhoto < this.lengthArrayPhotos - 1) {
-
-      this._changePhoto(this.numberPhoto++ );
       that.savePhoto(that.photos[that.numberPhoto + 1]);
     }
   };
 
   this._showPrevImage = function() {
     if (this.numberPhoto > 0) {
-
-      this._changePhoto(this.numberPhoto-- );
       that.savePhoto(that.photos[that.numberPhoto - 1]);
     }
   };
 
   this._changePhoto = function() {
-    this.currentPhoto.src = this.photos[this.numberPhoto];
+    this.currentPhoto.src = this.photos[that.numberPhoto];
 
     this.imgPrev.classList.toggle('invisible', this.numberPhoto === 0);
     this.imgNext.classList.toggle('invisible', this.numberPhoto === this.lengthArrayPhotos - 1);
@@ -70,6 +65,7 @@ function Gallery() {
 
   this.savePhoto = function(photoUrl) {
     var newUrl;
+
     if (photoUrl) {
       newUrl = that.createPhotoUrl(photoUrl);
     } else {
@@ -101,8 +97,12 @@ function Gallery() {
   };
   this.getPhotos(this.imgCollection);
 
-  this.showGallery = function() {
+  this.showGallery = function(idPhoto) {
+    that.numberPhoto = idPhoto;
     this.galleryContainer.classList.remove('invisible');
+
+    that.imgPrev.addEventListener('click', that.showPrevImage);
+    that.imgNext.addEventListener('click', that.showNextImage);
 
     window.addEventListener('keydown', function(evt) {
       that._onDocumentKeyDown(evt);
@@ -112,9 +112,9 @@ function Gallery() {
   };
 
   this.photoGallery.addEventListener('click', function(evt) {
-    evt.preventDefault();
     if (evt.target.tagName === 'IMG') {
-      that.numberPhoto = that.getActivePhoto(evt.target.src);
+      evt.preventDefault();
+      that.savePhoto(evt.target.getAttribute('src'));
       that.showGallery();
     }
   });
