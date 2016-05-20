@@ -70,25 +70,16 @@ function Gallery() {
       newUrl = that.createPhotoUrl(photoUrl);
     } else {
       newUrl = window.location.pathname;
-      that.hideGallery();
+      that._hideGallery();
     }
 
     history.pushState('', document.title, newUrl);
     window.dispatchEvent(new Event('hashchange'));
   };
 
-  this.getActivePhoto = function(param) {
-    for (var i = 0; i < this.photos.length; i++) {
-      if(this.photos[i] === param) {
-        break;
-      }
-    }
-    return i;
-  };
-
   this.getPhotos = function(pct) {
     for (var i = 0; i < pct.length; i++) {
-      this.photos[i] = pct[i].src;
+      this.photos[i] = pct[i].getAttribute('src');
     }
     this.lengthArrayPhotos = this.photos.length;
 
@@ -115,7 +106,6 @@ function Gallery() {
     if (evt.target.tagName === 'IMG') {
       evt.preventDefault();
       that.savePhoto(evt.target.getAttribute('src'));
-      that.showGallery();
     }
   });
 
@@ -128,7 +118,7 @@ function Gallery() {
     if (photoNumber >= 0) {
       that.showGallery(photoNumber);
     } else {
-      that.hideGallery();
+      that._hideGallery();
     }
   };
 
