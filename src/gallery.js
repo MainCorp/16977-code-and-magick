@@ -133,9 +133,9 @@ function Gallery() {
     }
   });
 
+  this.getPhotos(this.imgCollection);
   this.hashCheck();
   window.addEventListener('hashchange', this.hashCheck);
-  this.getPhotos(this.imgCollection);
 }
 
 module.exports = new Gallery();
