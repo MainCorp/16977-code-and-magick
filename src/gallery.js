@@ -27,24 +27,26 @@ function Gallery() {
   };
 
   this._onCloseClick = function() {
-    that._hideGallery();
+    this._hideGallery();
+    history.replaceState(null, null, '/');
   };
 
   this._onDocumentKeyDown = function(evt) {
     if (evt.keyCode === this.KEY_CODE_ESC) {
-      that._hideGallery();
+      this._hideGallery();
+      history.replaceState(null, null, '/');
     }
   };
 
   this._showNextImage = function() {
     if (this.numberPhoto < this.lengthArrayPhotos - 1) {
-      that.savePhoto(that.photos[that.numberPhoto + 1]);
+      this.savePhoto(this.photos[this.numberPhoto + 1]);
     }
   };
 
   this._showPrevImage = function() {
     if (this.numberPhoto > 0) {
-      that.savePhoto(that.photos[that.numberPhoto - 1]);
+      this.savePhoto(this.photos[this.numberPhoto - 1]);
     }
   };
 
@@ -67,10 +69,10 @@ function Gallery() {
     var newUrl;
 
     if (photoUrl) {
-      newUrl = that.createPhotoUrl(photoUrl);
+      newUrl = this.createPhotoUrl(photoUrl);
     } else {
       newUrl = window.location.pathname;
-      that._hideGallery();
+      this._hideGallery();
     }
 
     history.pushState('', document.title, newUrl);
@@ -86,14 +88,13 @@ function Gallery() {
     this.totalPreviews.textContent = this.lengthArrayPhotos;
     this.currentPhoto = this.galleryPreview.appendChild(new Image());
   };
-  this.getPhotos(this.imgCollection);
 
   this.showGallery = function(idPhoto) {
-    that.numberPhoto = idPhoto;
+    this.numberPhoto = idPhoto;
     this.galleryContainer.classList.remove('invisible');
 
-    that.imgPrev.addEventListener('click', that.showPrevImage);
-    that.imgNext.addEventListener('click', that.showNextImage);
+    this.imgPrev.addEventListener('click', that.showPrevImage);
+    this.imgNext.addEventListener('click', that.showNextImage);
 
     window.addEventListener('keydown', function(evt) {
       that._onDocumentKeyDown(evt);
@@ -101,13 +102,6 @@ function Gallery() {
 
     this._changePhoto();
   };
-
-  this.photoGallery.addEventListener('click', function(evt) {
-    if (evt.target.tagName === 'IMG') {
-      evt.preventDefault();
-      that.savePhoto(evt.target.getAttribute('src'));
-    }
-  });
 
   this.hashCheck = function() {
     var matches = that.hashPhotoValidate.exec(location.hash);
@@ -132,8 +126,16 @@ function Gallery() {
     that._onCloseClick();
   });
 
+  this.photoGallery.addEventListener('click', function(evt) {
+    if (evt.target.tagName === 'IMG') {
+      evt.preventDefault();
+      that.savePhoto(evt.target.getAttribute('src'));
+    }
+  });
+
   this.hashCheck();
   window.addEventListener('hashchange', this.hashCheck);
+  this.getPhotos(this.imgCollection);
 }
 
 module.exports = new Gallery();
