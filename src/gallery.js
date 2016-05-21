@@ -26,15 +26,18 @@ function Gallery() {
     return '#photo/' + url;
   };
 
-  this._onCloseClick = function() {
+  this.changesOnClose = function() {
     this._hideGallery();
     history.replaceState(null, null, '/');
   };
 
+  this._onCloseClick = function() {
+    this.changesOnClose();
+  };
+
   this._onDocumentKeyDown = function(evt) {
     if (evt.keyCode === this.KEY_CODE_ESC) {
-      this._hideGallery();
-      history.replaceState(null, null, '/');
+      this.changesOnClose();
     }
   };
 
