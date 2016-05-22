@@ -19,21 +19,23 @@ function Gallery() {
   this.currentPhoto = 0;
   this.numberPhoto = 0;
 
-  this.showPrevImage = this.hashPhotoValidate.bind(this);
-  this.showPrevImage = this.createPhotoUrl.bind(this);
-  this.showPrevImage = this.changesOnClose.bind(this);
-  this.showPrevImage = this.onCloseClick.bind(this);
-  this.showPrevImage = this.onDocumentKeyDown.bind(this);
-  this.showPrevImage = this.showNextImage.bind(this);
+  this.hashPhotoValidate = this.hashPhotoValidate.bind(this);
+  this.createPhotoUrl = this.createPhotoUrl.bind(this);
+  this.changesOnClose = this.changesOnClose.bind(this);
+  this.onCloseClick = this.onCloseClick.bind(this);
+  this.onDocumentKeyDown = this.onDocumentKeyDown.bind(this);
+  this.showNextImage = this.showNextImage.bind(this);
   this.showPrevImage = this.showPrevImage.bind(this);
-  this.showPrevImage = this.changePhoto.bind(this);
-  this.showPrevImage = this.hideGallery.bind(this);
-  this.showPrevImage = this.savePhoto.bind(this);
-  this.showPrevImage = this.getPhotos.bind(this);
-  this.showPrevImage = this.showGallery.bind(this);
-  this.showPrevImage = this.hashCheck.bind(this);
+  this.changePhoto = this.changePhoto.bind(this);
+  this.hideGallery = this.hideGallery.bind(this);
+  this.savePhoto = this.savePhoto.bind(this);
+  this.getPhotos = this.getPhotos.bind(this);
+  this.showGallery = this.showGallery.bind(this);
+  this.hashCheck = this.hashCheck.bind(this);
+  this.eventsClick = this.eventsClick.bind(this);
 
   this.getPhotos(this.imgCollection);
+  this.eventsClick();
   this.hashCheck();
   window.addEventListener('hashchange', this.hashCheck.bind(this));
 }
@@ -137,21 +139,27 @@ Gallery.prototype.hashCheck = function() {
   }
 };
 
-Gallery.prototype.imgPrev.addEventListener('click', function() {
-  this.showPrevImage();
-});
-Gallery.prototype.imgNext.addEventListener('click', function() {
-  this.showNextImage();
-});
-Gallery.prototype.btnCloseGallery.addEventListener('click', function() {
-  this.onCloseClick();
-});
+Gallery.prototype.eventsClick = function() {
 
-Gallery.prototype.photoGallery.addEventListener('click', function(evt) {
-  if (evt.target.tagName === 'IMG') {
-    evt.preventDefault();
-    this.savePhoto(evt.target.getAttribute('src'));
-  }
-});
+  this.imgPrev.addEventListener('click', function() {
+    this.showPrevImage();
+  });
+
+  this.imgNext.addEventListener('click', function() {
+    this.showNextImage();
+  });
+
+  this.btnCloseGallery.addEventListener('click', function() {
+    this.onCloseClick();
+  });
+
+  this.photoGallery.addEventListener('click', function(evt) {
+    if (evt.target.tagName === 'IMG') {
+      evt.preventDefault();
+      this.savePhoto(evt.target.getAttribute('src'));
+    }
+  });
+
+};
 
 module.exports = new Gallery();
