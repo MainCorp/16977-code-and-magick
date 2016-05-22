@@ -138,23 +138,24 @@ Gallery.prototype.hashCheck = function() {
 };
 
 Gallery.prototype.eventsClick = function() {
+  var that = this;
 
   this.imgPrev.addEventListener('click', function() {
-    this.showPrevImage();
+    that.showPrevImage();
   });
 
   this.imgNext.addEventListener('click', function() {
-    this.showNextImage();
+    that.showNextImage();
   });
 
   this.btnCloseGallery.addEventListener('click', function() {
-    this.onCloseClick();
+    that.onCloseClick();
   });
 
   this.photoGallery.addEventListener('click', function(evt) {
     if (evt.target.tagName === 'IMG') {
       evt.preventDefault();
-      this.savePhoto(evt.target.getAttribute('src'));
+      that.savePhoto(evt.target.getAttribute('src'));
     }
   });
 
