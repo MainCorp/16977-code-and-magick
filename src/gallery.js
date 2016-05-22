@@ -13,13 +13,13 @@ function Gallery() {
   this.photos = [];
   this.lengthArrayPhotos = this.photos.length;
   this.imgPrev.classList.toggle('invisible', true);
+  this.hashPhotoValidate = /#photo\/(\S+)/;
 
   this.KEY_CODE_ESC = 27;
 
   this.currentPhoto = 0;
   this.numberPhoto = 0;
 
-  this.hashPhotoValidate = this.hashPhotoValidate.bind(this);
   this.createPhotoUrl = this.createPhotoUrl.bind(this);
   this.changesOnClose = this.changesOnClose.bind(this);
   this.onCloseClick = this.onCloseClick.bind(this);
@@ -39,8 +39,6 @@ function Gallery() {
   this.hashCheck();
   window.addEventListener('hashchange', this.hashCheck.bind(this));
 }
-
-Gallery.prototype.hashPhotoValidate = /#photo\/(\S+)/;
 
 Gallery.prototype.createPhotoUrl = function(url) {
   return '#photo/' + url;
