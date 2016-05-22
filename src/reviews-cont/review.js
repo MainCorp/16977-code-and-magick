@@ -15,6 +15,7 @@ function Review(data, container) {
   this.remove = this.remove.bind(this);
 
   this.element = this.createReview();
+  this.eventsClickAnswer();
 }
 
 Review.prototype.createReview = function() {
