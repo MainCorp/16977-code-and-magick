@@ -8,54 +8,66 @@ function Review(data, container) {
   this.data = data;
   this.container = container;
   this.element = elementToClone.cloneNode(true);
-  var that = this;
 
-  this.createReview = function() {
-    this.element.querySelector('.review-text').textContent = data.description;
-    var reviewRating = this.element.querySelector('.review-rating');
-    reviewRating.style.display = 'block';
-
-    reviewRating.classList.add(reviewRatingClass[data.rating - 2]);
-
-    container.appendChild(this.element);
-
-    var photoUser = new Image();
-    var reviewAuthor = this.element.querySelector('.review-author');
-
-    photoUser.onload = function() {
-      photoUser.classList.add('review-author');
-      photoUser.height = 124;
-      photoUser.width = 124;
-      photoUser.alt = 'Аватарка пользователя ' + data.author.name;
-      photoUser.title = data.author.name;
-
-      that.element.replaceChild(photoUser, reviewAuthor);
-    };
-
-    photoUser.onerror = function() {
-      that.element.classList.add('review-load-failure');
-    };
-
-    photoUser.src = data.author.picture;
-    return this.element;
-  };
+  this.createReview = this.createReview.bind(this);
+  this.onClickRQuizAnswer = this.onClickRQuizAnswer.bind(this);
+  this.eventsClickAnswer = this.eventsClickAnswer.bind(this);
+  this.remove = this.remove.bind(this);
 
   this.element = this.createReview();
+}
 
-  this.onClickRQuizAnswer = function(evt) {
-    if (evt.target.classList.contains('review-quiz-answer')) {
-      evt.preventDefault();
-      evt.target.classList.add('review-quiz-answer-active');
-    }
+Review.prototype.createReview = function() {
+  var that = this;
+
+  this.element.querySelector('.review-text').textContent = this.data.description;
+  var reviewRating = this.element.querySelector('.review-rating');
+  reviewRating.style.display = 'block';
+
+  reviewRating.classList.add(reviewRatingClass[this.data.rating - 2]);
+
+  this.container.appendChild(this.element);
+
+  var photoUser = new Image();
+  var reviewAuthor = this.element.querySelector('.review-author');
+
+  photoUser.onload = function() {
+    photoUser.classList.add('review-author');
+    photoUser.height = 124;
+    photoUser.width = 124;
+    photoUser.alt = 'Аватарка пользователя ' + that.data.author.name;
+    photoUser.title = that.data.author.name;
+
+    that.element.replaceChild(photoUser, reviewAuthor);
   };
+
+  photoUser.onerror = function() {
+    that.element.classList.add('review-load-failure');
+  };
+
+  photoUser.src = this.data.author.picture;
+  return this.element;
+};
+
+Review.prototype.onClickRQuizAnswer = function(evt) {
+  if (evt.target.classList.contains('review-quiz-answer')) {
+    evt.preventDefault();
+    evt.target.classList.add('review-quiz-answer-active');
+  }
+};
+
+Review.prototype.eventsClickAnswer = function() {
+  var that = this;
 
   this.element.addEventListener('click', function(evt) {
     that.onClickRQuizAnswer(evt);
   });
+};
 
-  this.remove = function() {
-    that.element.removeEventListener('click', container.removeChild(that.element));
-  };
-}
+Review.prototype.remove = function() {
+  var that = this;
+
+  this.element.removeEventListener('click', that.container.removeChild(that.element));
+};
 
 module.exports = Review;

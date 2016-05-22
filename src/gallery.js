@@ -111,6 +111,8 @@ Gallery.prototype.getPhotos = function(pct) {
 };
 
 Gallery.prototype.showGallery = function(idPhoto) {
+  var that = this;
+
   this.numberPhoto = idPhoto;
   this.galleryContainer.classList.remove('invisible');
 
@@ -118,7 +120,7 @@ Gallery.prototype.showGallery = function(idPhoto) {
   this.imgNext.addEventListener('click', this.showNextImage);
 
   window.addEventListener('keydown', function(evt) {
-    this.onDocumentKeyDown(evt);
+    that.onDocumentKeyDown(evt);
   });
 
   this.changePhoto();
@@ -139,14 +141,6 @@ Gallery.prototype.hashCheck = function() {
 
 Gallery.prototype.eventsClick = function() {
   var that = this;
-
-  this.imgPrev.addEventListener('click', function() {
-    that.showPrevImage();
-  });
-
-  this.imgNext.addEventListener('click', function() {
-    that.showNextImage();
-  });
 
   this.btnCloseGallery.addEventListener('click', function() {
     that.onCloseClick();
