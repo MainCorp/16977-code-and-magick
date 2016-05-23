@@ -14,7 +14,7 @@ function Review(data, container) {
   this.eventsClickAnswer = this.eventsClickAnswer.bind(this);
   this.remove = this.remove.bind(this);
 
-  this.element = this.createReview();
+  this.createReview();
   this.eventsClickAnswer();
 }
 
@@ -47,7 +47,6 @@ Review.prototype.createReview = function() {
   };
 
   photoUser.src = this.data.author.picture;
-  return this.element;
 };
 
 Review.prototype.onClickRQuizAnswer = function(evt) {
