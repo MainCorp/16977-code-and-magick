@@ -1,85 +1,105 @@
 'use strict';
+function ReviewsFilter() {
 
-var Review = require('./review');
-var getReviews = require('./get-reviews');
-var getActiveFilter = require('./filter/get-active-filter');
+  this.getReviews = require('./get-reviews');
+  this.getActiveFilter = require('./filter/get-active-filter');
 
-var reviewsContainer = document.querySelector('.reviews-list');
-var filterReviews = document.querySelector('.reviews-filter');
-var elementFilterReviews = filterReviews['reviews'];
-var contentReviews = document.querySelector('.reviews');
-var reviews;
-var reviewsToFilter = [];
-var renderedReviews = [];
-var toShowButton = document.querySelector('.reviews-controls-more');
-var localFilter = 'id';
+  this.reviewsContainer = document.querySelector('.reviews-list');
+  this. filterReviews = document.querySelector('.reviews-filter');
+  this.elementFilterReviews = this.filterReviews['reviews'];
+  this.contentReviews = document.querySelector('.reviews');
+  this.reviews = [];
+  this.reviewsToFilter = [];
+  this.renderedReviews = [];
+  this.toShowButton = document.querySelector('.reviews-controls-more');
+  this.localFilter = 'id';
+  var that = this;
 
+  this.PAGE_SIZE = 3;
 
-var PAGE_SIZE = 3;
+  this.pageNumber = 0;
 
-var pageNumber;
+  this.Filter = {
+    'ALL': 'reviews-all',
+    'RECENT': 'reviews-recent',
+    'GOOD': 'reviews-good',
+    'BAD': 'reviews-bad',
+    'POPULAR': 'reviews-popular'
+  };
 
-var Filter = {
-  'ALL': 'reviews-all',
-  'RECENT': 'reviews-recent',
-  'GOOD': 'reviews-good',
-  'BAD': 'reviews-bad',
-  'POPULAR': 'reviews-popular'
-};
+  this.defaultFilter = this.Filter.ALL;
 
-var defaultFilter = Filter.ALL;
+  this.filterReviews.classList.add('invisible');
 
-filterReviews.classList.add('invisible');
+  this.toShowButtonActive = this.toShowButtonActive.bind(this);
+  this.renderReviews = this.renderReviews.bind(this);
+  this.eventsClickFilter = this.eventsClickFilter.bind(this);
+  this.addActiveFilter = this.addActiveFilter.bind(this);
 
-var toShowButtonActive = function() {
-  toShowButton.addEventListener('click', function() {
-    pageNumber++;
-    renderReviews(reviewsToFilter, pageNumber);
+  this.getReviews(function(loadedReviews) {
+    that.reviews = loadedReviews;
+    that.defaultFilter = localStorage.getItem(that.localFilter);
+    that.filterReviews.elements['reviews'].value = that.defaultFilter;
+    that.addActiveFilter(that.defaultFilter);
+    that.toShowButtonActive();
+    that.contentReviews.classList.remove('.reviews-list-loading');
+  });
+  this.eventsClickFilter();
+
+  this.filterReviews.classList.remove('invisible');
+
+}
+
+ReviewsFilter.prototype.toShowButtonActive = function() {
+  var that = this;
+  this.toShowButton.addEventListener('click', function() {
+    that.pageNumber++;
+    that.renderReviews(that.reviewsToFilter, that.pageNumber);
   });
 };
 
-var renderReviews = function(reviewsData, page, replaced) {
+ReviewsFilter.prototype.renderReviews = function(reviewsData, page, replaced) {
+  var that = this;
+  var Review = require('./review');
+
   if (replaced) {
-    renderedReviews.forEach(function(review) {
+    this.renderedReviews.forEach(function(review) {
       review.remove();
     });
-    renderedReviews = [];
+    that.renderedReviews = [];
   }
 
-  var from = page * PAGE_SIZE;
-  var to = from + PAGE_SIZE;
+  var from = page * this.PAGE_SIZE;
+  var to = from + this.PAGE_SIZE;
 
   reviewsData.slice(from, to).forEach(function(review) {
-    renderedReviews.push(new Review(review, reviewsContainer));
+    that.renderedReviews.push(new Review(review, that.reviewsContainer));
   });
 
-  if (to >= reviewsToFilter.length) {
-    toShowButton.classList.add('invisible');
+  if (to >= that.reviewsToFilter.length) {
+    that.toShowButton.classList.add('invisible');
   }
 };
 
-filterReviews.addEventListener('change', function() {
-  if (elementFilterReviews.value !== elementFilterReviews) {
-    addActiveFilter(elementFilterReviews.value);
-  }
-});
+ReviewsFilter.prototype.eventsClickFilter = function() {
+  var that = this;
 
-var addActiveFilter = function(id) {
-  reviewsToFilter = getActiveFilter(reviews, id);
-  pageNumber = 0;
-  toShowButton.classList.remove('invisible');
-  localStorage.setItem(localFilter, id);
-
-  renderReviews(reviewsToFilter, pageNumber, true);
+  this.filterReviews.addEventListener('change', function() {
+    if (that.elementFilterReviews.value !== that.elementFilterReviews) {
+      that.addActiveFilter(that.elementFilterReviews.value);
+    }
+  });
 };
 
-getReviews(function(loadedReviews) {
-  reviews = loadedReviews;
-  defaultFilter = localStorage.getItem(localFilter);
-  filterReviews.elements['reviews'].value = defaultFilter;
-  addActiveFilter(defaultFilter);
-  toShowButtonActive();
-  contentReviews.classList.remove('.reviews-list-loading');
-});
+ReviewsFilter.prototype.addActiveFilter = function(id) {
+  var that = this;
 
-filterReviews.classList.remove('invisible');
+  that.reviewsToFilter = this.getActiveFilter(that.reviews, id);
+  that.pageNumber = 0;
+  that.toShowButton.classList.remove('invisible');
+  localStorage.setItem(that.localFilter, id);
+
+  that.renderReviews(that.reviewsToFilter, that.pageNumber, true);
+};
+
+module.exports = new ReviewsFilter();
